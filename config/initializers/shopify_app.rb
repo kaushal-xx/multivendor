@@ -1,7 +1,7 @@
 ShopifyApp.configure do |config|
   config.application_name = "Multivendor"
-  config.api_key = ENV.fetch('SHOPIFY_API_KEY', '').presence || raise('Missing SHOPIFY_API_KEY')
-  config.secret = ENV.fetch('SHOPIFY_API_SECRET', '').presence || raise('Missing SHOPIFY_API_SECRET')
+  config.api_key = Rails.application.credentials.dig(:SHOPIFY_API_KEY).presence || raise('Missing SHOPIFY_API_KEY')
+  config.secret = Rails.application.credentials.dig(:SHOPIFY_API_SECRET).presence || raise('Missing SHOPIFY_API_SECRET')
   config.old_secret = ""
   config.scope = "read_products,write_products,read_product_listings,read_customers,write_customers,read_orders,write_orders,write_order_edits,read_inventory,write_inventory,read_locations,read_checkouts,write_checkouts,read_discounts,write_discounts" # Consult this page for more scope options:
                                  # https://help.shopify.com/en/api/getting-started/authentication/oauth/scopes
