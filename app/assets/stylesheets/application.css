@@ -13,5 +13,7 @@
  *= require bootstrap
  *= require argon
  *= require nucleo
+ *= require chart.min
+ *= require social-share-button
  *= require_self
  */

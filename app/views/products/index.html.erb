@@ -31,6 +31,7 @@
                     <th scope="col" class="sort" data-sort="status">Price</th>
                     <th scope="col">Variant Size</th>
                     <th scope="col" class="sort" data-sort="completion">Action</th>
+                    <th scope="col" class="sort" data-sort="completion">Share</th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -56,6 +57,9 @@
                         <a href="<%= product_url(product)%>" class="btn btn-sm btn-neutral" target="_blank">Open URL</a>
                         <span class="product_url" style="display: none;"><%= product_url(product)%></span>
                         <span class="btn btn-sm btn-neutral copy_link">Copy URL</span>
+                      </td>
+                      <td>
+                        <%= social_share_button_tag(product.title, url: product_url(product)) %>
                       </td>
                     </tr>
                   <% end %>

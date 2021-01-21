@@ -7,14 +7,16 @@
 default: &default
   adapter: postgresql
   timeout: 5000
-  host: localhost
+  host: ec2-54-242-120-138.compute-1.amazonaws.com
   port: 5432
   pool: 5
   encoding: unicode
 
 development:
   <<: *default
-  database: multivendor_development
+  database: dc037d1oe5ta6t
+  username: nnioyrzbijqjly
+  password: 0114eab95ca3f4560a676b5b032b874532b61f65b92081e2f202505466643d70
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

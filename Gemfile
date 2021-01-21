@@ -38,6 +38,8 @@ gem 'sidekiq'
 gem 'shopify_app'
 gem 'devise-bootstrap-views', '~> 1.0'
 gem 'devise-i18n'
+gem 'social-share-button'
+gem 'shareable'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
