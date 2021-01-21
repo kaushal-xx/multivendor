@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class WebhooksController < ApplicationController
+  skip_before_action :verify_authenticity_token 
   def order_create
   	Shop.first.set_store_session
     puts "**********************"
