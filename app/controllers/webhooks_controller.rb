@@ -8,7 +8,7 @@ class WebhooksController < ApplicationController
     puts params[:id]
     puts "*********************"
     shopify_order = ShopifyAPI::Order.find params[:id]
-    reference_code = shopify_order.note_attributes.select{|key| key['name'] == 'reference_code'}.first||{})['value']
+    reference_code = shopify_order.note_attributes.select{|key| key.name == 'reference_code'}.first.try(:value)
     if reference_code.present?
         sme_user = SmeUser.find_by_reference_code reference_code
         if sme_user.present?
