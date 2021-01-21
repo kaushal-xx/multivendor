@@ -6,9 +6,9 @@ class Shop < ActiveRecord::Base
     ShopifyApp.configuration.api_version
   end
 
-  def set_store_session
-    ShopifyAPI::Base.clear_session
-    session=Shop.retrieve(self.id)
-    ShopifyAPI::Base.activate_session(session)
+  def self.set_store_session
+    shop_url = "https://#{Rails.application.credentials.dig(:shopify_api_shopprakritik_key).presence}:#{Rails.application.credentials.dig(:shopify_api_shopprakritik_password).presence}@#{Rails.application.credentials.dig(:shopify_api_shopprakritik_shop).presence}"
+    ShopifyAPI::Base.site = shop_url
+    ShopifyAPI::Base.api_version = ShopifyApp.configuration.api_version
   end
 end

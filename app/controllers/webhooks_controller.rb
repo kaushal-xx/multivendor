@@ -3,7 +3,7 @@
 class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token 
   def order_create
-    Shop.first.set_store_session
+    Shop.set_store_session
     puts "**********************"
     puts params[:id]
     puts params[:note_attributes]
@@ -27,7 +27,7 @@ class WebhooksController < ApplicationController
                 else
                     sme_commission = 0.0
                 end
-                order.sme_user_commission = sme_commission
+                order.sme_user_commission = sme_commission.round(2)
                 order.save
             end
         end

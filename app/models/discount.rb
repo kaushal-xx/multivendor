@@ -11,7 +11,7 @@ class Discount < ApplicationRecord
 
   def generate_shopify_code
   	if self.shopify_discount_code.present?
-  		Shop.first.set_store_session
+  		Shop.set_store_session
   		price_rule = ShopifyAPI::PriceRule.create(title: self.shopify_discount_code, target_selection: 'all', allocation_method: 'across', value_type: 'percentage', value: self.shopify_discount_presents*-1, target_type:'line_item',starts_at: Date.today, customer_selection: 'all')
       if price_rule.id.present?
   			discount = ShopifyAPI::DiscountCode.create(price_rule_id: price_rule.id, code:  price_rule.title)

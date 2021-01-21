@@ -45,7 +45,7 @@
                         </div>
                       </th>
                       <td class="budget">
-                        <%=image_tag product.image.src, width: '25px', height: '25px'%>
+                        <%=image_tag(product&.image&.src, width: '25px', height: '25px') if product&.image.present?%>
                       </td>
                       <td>
                         <%= product.variants.first.price%>
