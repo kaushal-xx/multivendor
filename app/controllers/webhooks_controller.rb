@@ -6,15 +6,17 @@ class WebhooksController < ApplicationController
     Shop.first.set_store_session
     puts "**********************"
     puts params[:id]
+    puts params[:note_attributes]
+    puts params[:total_price]
+    puts params[:total_discounts]
     puts "*********************"
-    shopify_order = ShopifyAPI::Order.find params[:id]
-    reference_code = shopify_order.note_attributes.select{|key| key.name == 'reference_code'}.first.try(:value)
+    reference_code = ((params[:note_attributes]||[]).select{|key| key['name'] == 'reference_code'}.first||{})['value']
     if reference_code.present?
         sme_user = SmeUser.find_by_reference_code reference_code
         if sme_user.present?
-            order = Order.find_by_shopify_order_id shopify_order.id
+            order = Order.find_by_shopify_order_id params[:id]
             if order.blank?
-                order = sme_user.orders.new(shopify_order_id: shopify_order.id, shopify_order_data: params, shopify_order_amount: shopify_order.total_price, shopify_order_discount_amount: shopify_order.total_discounts)
+                order = sme_user.orders.new(shopify_order_id: params[:id], shopify_order_data: params, shopify_order_amount: params[:total_price], shopify_order_discount_amount: params[:total_discounts])
                 order_total_value = order.shopify_order_amount.to_f + order.shopify_order_discount_amount.to_f
                 sme_commission = (sme_user.max_commission.to_f/100) * order_total_value.to_f
                 if sme_commission > order.shopify_order_discount_amount.to_f
