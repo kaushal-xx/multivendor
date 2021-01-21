@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shopify_discount_id: 
+  shopify_discount_data: 
+  sme_user: one
+  shopify_discount_code: MyString
+  active: false
+  shopify_discount_presents: 1.5
+
+two:
+  shopify_discount_id: 
+  shopify_discount_data: 
+  sme_user: two
+  shopify_discount_code: MyString
+  active: false
+  shopify_discount_presents: 1.5

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shopify_order_id: 
+  shopify_order_data: 
+  sme_user: one
+  shopify_order_amount: 1.5
+  sme_user_commission: 1.5
+  shopify_order_discount_amount: 1.5
+
+two:
+  shopify_order_id: 
+  shopify_order_data: 
+  sme_user: two
+  shopify_order_amount: 1.5
+  sme_user_commission: 1.5
+  shopify_order_discount_amount: 1.5

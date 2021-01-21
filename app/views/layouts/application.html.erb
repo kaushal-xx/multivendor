@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Multivendor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "About Multivendor" %></title>
+
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "About Multivendor" %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <% if current_sme_user.present?%>
+      <%= render 'layouts/online_navigation' %>
+    <% else %>
+      <%= render 'layouts/offline_navigation' %>
+    <% end %>
+    <div class="main-content" id="panel">
+      <% if current_sme_user.present?%>
+        <%= render 'layouts/top_header' %>
+      <% end %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
+      <%= render 'layouts/footer' %>
+    </div>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+
   </body>
 </html>

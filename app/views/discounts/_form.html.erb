@@ -1,0 +1,47 @@
+<%= form_with(model: discount, local: true) do |form| %>
+  <% if discount.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(discount.errors.count, "error") %> prohibited this discount from being saved:</h2>
+
+      <ul>
+        <% discount.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :shopify_discount_id %>
+    <%= form.text_field :shopify_discount_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_discount_data %>
+    <%= form.text_field :shopify_discount_data %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sme_user_id %>
+    <%= form.text_field :sme_user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_discount_code %>
+    <%= form.text_field :shopify_discount_code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :active %>
+    <%= form.check_box :active %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_discount_presents %>
+    <%= form.text_field :shopify_discount_presents %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

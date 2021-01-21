@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  include ShopifyApp::EmbeddedApp
-  include ShopifyApp::RequireKnownShop
-
+	before_action :authenticate_sme_user!
   def index
-    @shop_origin = current_shopify_domain
+
+  end
+
+  def profile
+
   end
 end

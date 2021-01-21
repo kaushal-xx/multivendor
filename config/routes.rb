@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+  resources :discounts
+  resources :orders
+  devise_for :sme_users
   root :to => 'home#index'
+  get 'profile', to: 'home#profile'
 
   resource :marketing_activities, only: [:create, :update] do
     patch :resume
@@ -11,6 +15,7 @@ Rails.application.routes.draw do
     post :errors
   end
   get '/products', :to => 'products#index'
+  post '/webhooks/order_create', :to => 'webhooks#order_create'
   mount ShopifyApp::Engine, at: '/'
 # frozen_string_literal: true
 

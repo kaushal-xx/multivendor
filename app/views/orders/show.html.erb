@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Shopify order:</strong>
+  <%= @order.shopify_order_id %>
+</p>
+
+<p>
+  <strong>Shopify order data:</strong>
+  <%= @order.shopify_order_data %>
+</p>
+
+<p>
+  <strong>Sme user:</strong>
+  <%= @order.sme_user_id %>
+</p>
+
+<p>
+  <strong>Shopify order amount:</strong>
+  <%= @order.shopify_order_amount %>
+</p>
+
+<p>
+  <strong>Sme user commission:</strong>
+  <%= @order.sme_user_commission %>
+</p>
+
+<p>
+  <strong>Shopify order discount amount:</strong>
+  <%= @order.shopify_order_discount_amount %>
+</p>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

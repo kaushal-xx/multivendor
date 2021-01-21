@@ -1,0 +1,83 @@
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Discount Code</h6>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Discount New </h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <% if @discount.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@discount.errors.count, "error") %> prohibited this discount from being saved:</h2>
+
+              <ul>
+                <% @discount.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= form_with(model: @discount, local: true) do |form| %>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Discount Code</label>
+                    <%= form.text_field :shopify_discount_code, class: "form-control"  %>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Discount Present</label>
+                    <%= form.text_field :shopify_discount_presents, class: "form-control"  %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Active</label>
+                    <%= form.check_box :active %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Default</label>
+                    <%= form.check_box :default %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <%= form.submit 'Save', class: 'btn btn-primary my-4' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

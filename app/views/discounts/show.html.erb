@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Shopify discount:</strong>
+  <%= @discount.shopify_discount_id %>
+</p>
+
+<p>
+  <strong>Shopify discount data:</strong>
+  <%= @discount.shopify_discount_data %>
+</p>
+
+<p>
+  <strong>Sme user:</strong>
+  <%= @discount.sme_user_id %>
+</p>
+
+<p>
+  <strong>Shopify discount code:</strong>
+  <%= @discount.shopify_discount_code %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @discount.active %>
+</p>
+
+<p>
+  <strong>Shopify discount presents:</strong>
+  <%= @discount.shopify_discount_presents %>
+</p>
+
+<%= link_to 'Edit', edit_discount_path(@discount) %> |
+<%= link_to 'Back', discounts_path %>
