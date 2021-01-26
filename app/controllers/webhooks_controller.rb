@@ -58,8 +58,8 @@ class WebhooksController < ApplicationController
                             shopify_order_status: line_item[:fulfillment_status],
                             shopify_line_item_price: line_item[:price],
                             shopify_line_item_discount: line_item[:total_discount],
-                            shopify_line_item_total_price: line_item[:price]*line_item[:price],
-                            vendor_commission: (line_item[:price]*line_item[:price]) - line_item[:total_discount])
+                            shopify_line_item_total_price: (line_item[:quantity].to_i*line_item[:price].to_f),
+                            vendor_commission: (line_item[:quantity].to_i*line_item[:price].to_f) - line_item[:total_discount].to_f)
                     end
                     vendor_variant.reload_shopify_variant_stock
                 end
