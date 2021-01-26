@@ -54,6 +54,7 @@ class WebhooksController < ApplicationController
                             shopify_variant_id: line_item[:variant_id],
                             vendor: vendor_variant.vendor, 
                             shopify_order_id: params[:id], 
+                            shopify_line_item_id: line_item[:id],
                             shopify_order_data: params, 
                             shopify_order_amount: params[:total_price], 
                             shopify_product_quantity: line_item[:quantity],

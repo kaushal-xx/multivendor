@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
-  resources :vendor_orders
+  resources :vendor_orders do
+    resources :vendor_fulfillments
+  end
   resources :vendor_products do 
     resources :vendor_variants
   end

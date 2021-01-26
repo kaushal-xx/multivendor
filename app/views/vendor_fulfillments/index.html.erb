@@ -4,10 +4,10 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Orders</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Fulfillment</h6>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              <%= link_to 'New', new_vendor_order_vendor_fulfillment_path(@order), class: 'btn btn-sm btn-neutral' %>
             </div>
           </div>
         </div>
@@ -20,7 +20,7 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Orders</h3>
+              <h3 class="mb-0">Fulfillment</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -28,57 +28,46 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="name">Order ID</th>
-                    <th scope="col" class="sort" data-sort="budget">Order Amount</th>
-                    <th scope="col" class="sort" data-sort="budget">Commission</th>
-                    <th scope="col" class="sort" data-sort="budget">Discount</th>
                     <th scope="col" class="sort" data-sort="budget">Product</th>
                     <th scope="col" class="sort" data-sort="budget">Variant</th>
-                    <th scope="col" class="sort" data-sort="budget">Product Quantity</th>
+                    <th scope="col" class="sort" data-sort="budget">Tracking number</th>
+                    <th scope="col" class="sort" data-sort="budget">Tracking URL</th>
+                    <th scope="col" class="sort" data-sort="budget">Quantity</th>
                     <th scope="col" class="sort" data-sort="status">Status</th>
-                    <th scope="col">User</th>
                     <th scope="col" class="sort" data-sort="completion">Date</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <% @orders.each do |order|%>
+                  <% @vendor_fulfillments.each do |fulfillment|%>
                     <tr>
                       <th scope="row">
                         <div class="media align-items-center">
                           <div class="media-body">
-                            <span class="name mb-0 text-sm"><%= order.shopify_order_data['name']%></span>
+                            <span class="name mb-0 text-sm"><%= fulfillment.vendor_order.shopify_order_data['name']%></span>
                           </div>
                         </div>
                       </th>
                       <td class="budget">
-                        <%= order.shopify_order_data['total_price']%>
+                        <%= fulfillment.vendor_order.vendor_product.shopify_product_data['title']%>
                       </td>
                       <td class="budget">
-                        <%= order.vendor_commission%>
+                        <%= fulfillment.vendor_order.vendor_variant.shopify_variant_data['title']%>
                       </td>
                       <td class="budget">
-                        <%= order.shopify_line_item_discount%>
+                        <%= fulfillment.shopify_fulfillment_data['tracking_number']%>
                       </td>
                       <td class="budget">
-                        <%= order.vendor_product.shopify_product_data['title']%>
+                        <%= fulfillment.shopify_fulfillment_data['tracking_url']%>
                       </td>
                       <td class="budget">
-                        <%= order.vendor_variant.shopify_variant_data['title']%>
+                        <%= fulfillment.shopify_fulfillment_count%>
                       </td>
                       <td class="budget">
-                        <%= order.shopify_product_quantity%>
+                        <%= fulfillment.shopify_fulfillment_status%>
                       </td>
                       <td>
-                        <%= order.shopify_order_data['fulfillment_status']%>
-                      </td>
-                      <td>
-                        <%= order.shopify_order_data['customer']['email']%>
-                      </td>
-                      <td>
-                        <%= order.shopify_order_data['created_at']%>
-                      </td>
-                      <td>
-                        <%= link_to 'Fulfillment', vendor_order_vendor_fulfillments_path(order), class: 'btn btn-sm btn-neutral' %>
+                        <%= fulfillment.shopify_fulfillment_data['created_at']%>
                       </td>
                     </tr>
                   <% end %>

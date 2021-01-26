@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_120613) do
+ActiveRecord::Schema.define(version: 2021_01_26_162215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,23 @@ ActiveRecord::Schema.define(version: 2021_01_26_120613) do
     t.index ["shopify_user_id"], name: "index_users_on_shopify_user_id", unique: true
   end
 
+  create_table "vendor_fulfillments", force: :cascade do |t|
+    t.bigint "vendor_id", null: false
+    t.bigint "vendor_order_id", null: false
+    t.bigint "shopify_order_id"
+    t.bigint "shopify_variant_id"
+    t.bigint "shopify_product_id"
+    t.bigint "shopify_line_item_id"
+    t.json "shopify_fulfillment_data"
+    t.integer "shopify_fulfillment_count"
+    t.string "shopify_fulfillment_status"
+    t.float "shopify_variant_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["vendor_id"], name: "index_vendor_fulfillments_on_vendor_id"
+    t.index ["vendor_order_id"], name: "index_vendor_fulfillments_on_vendor_order_id"
+  end
+
   create_table "vendor_orders", force: :cascade do |t|
     t.bigint "vendor_id", null: false
     t.bigint "shopify_order_id"
@@ -103,6 +120,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_120613) do
     t.float "shopify_line_item_discount"
     t.float "shopify_line_item_total_price"
     t.float "vendor_commission"
+    t.bigint "shopify_line_item_id"
     t.index ["vendor_id"], name: "index_vendor_orders_on_vendor_id"
     t.index ["vendor_product_id"], name: "index_vendor_orders_on_vendor_product_id"
   end
@@ -159,6 +177,8 @@ ActiveRecord::Schema.define(version: 2021_01_26_120613) do
   add_foreign_key "order_discounts", "discounts"
   add_foreign_key "order_discounts", "orders"
   add_foreign_key "orders", "sme_users"
+  add_foreign_key "vendor_fulfillments", "vendor_orders"
+  add_foreign_key "vendor_fulfillments", "vendors"
   add_foreign_key "vendor_orders", "vendor_products"
   add_foreign_key "vendor_orders", "vendors"
   add_foreign_key "vendor_products", "vendors"

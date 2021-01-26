@@ -1,0 +1,67 @@
+<%= form_with(model: vendor_fulfillment, local: true) do |form| %>
+  <% if vendor_fulfillment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(vendor_fulfillment.errors.count, "error") %> prohibited this vendor_fulfillment from being saved:</h2>
+
+      <ul>
+        <% vendor_fulfillment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :vendor_id %>
+    <%= form.text_field :vendor_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vendor_order_id %>
+    <%= form.text_field :vendor_order_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_order_id %>
+    <%= form.text_field :shopify_order_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_variant_id %>
+    <%= form.text_field :shopify_variant_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_product_id %>
+    <%= form.text_field :shopify_product_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_line_item_id %>
+    <%= form.text_field :shopify_line_item_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_fulfillment_data %>
+    <%= form.text_field :shopify_fulfillment_data %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_fulfillment_count %>
+    <%= form.number_field :shopify_fulfillment_count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_fulfillment_status %>
+    <%= form.text_field :shopify_fulfillment_status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_variant_price %>
+    <%= form.text_field :shopify_variant_price %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

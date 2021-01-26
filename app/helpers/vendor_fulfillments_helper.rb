@@ -1,0 +1,2 @@
+module VendorFulfillmentsHelper
+end
