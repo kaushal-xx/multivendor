@@ -46,7 +46,7 @@ class WebhooksController < ApplicationController
             if vendor_variant.present?
                 vendor = Vendor.find_by_code line_item[:vendor]
                 if vendor.present?
-                    vendor_variant.order.create(vendor_product: vendor_variant.vendor_product, 
+                    vendor_variant.vendor_orders.create(vendor_product: vendor_variant.vendor_product, 
                         vendor: vendor_variant.vendor, 
                         shopify_order_id: params[:id], 
                         shopify_order_data: params, 
