@@ -46,15 +46,21 @@ class WebhooksController < ApplicationController
             if vendor_variant.present?
                 vendor = Vendor.find_by_code line_item[:vendor]
                 if vendor.present?
-                    vendor_variant.vendor_orders.create(vendor_product: vendor_variant.vendor_product, 
-                        vendor: vendor_variant.vendor, 
-                        shopify_order_id: params[:id], 
-                        shopify_order_data: params, 
-                        shopify_order_amount: params[:total_price], 
-                        shopify_product_quantity: line_item[:quantity],
-                        shopify_order_status: line_item[:fulfillment_status],
-                        shopify_line_item_price: line_item[:price],
-                        shopify_line_item_discount: line_item[:total_discount])
+                    if vendor.vendor_orders.where(shopify_order_id: params[:id], shopify_variant_id: line_item[:variant_id]).blank?
+                        
+                        vendor_variant.vendor_orders.create(vendor_product: vendor_variant.vendor_product, 
+                            shopify_variant_id: line_item[:variant_id],
+                            vendor: vendor_variant.vendor, 
+                            shopify_order_id: params[:id], 
+                            shopify_order_data: params, 
+                            shopify_order_amount: params[:total_price], 
+                            shopify_product_quantity: line_item[:quantity],
+                            shopify_order_status: line_item[:fulfillment_status],
+                            shopify_line_item_price: line_item[:price],
+                            shopify_line_item_discount: line_item[:total_discount],
+                            shopify_line_item_total_price: line_item[:price]*line_item[:price],
+                            vendor_commission: (line_item[:price]*line_item[:price]) - line_item[:total_discount])
+                    end
                     vendor_variant.reload_shopify_variant_stock
                 end
 
