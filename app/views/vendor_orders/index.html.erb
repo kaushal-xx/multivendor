@@ -29,7 +29,10 @@
                   <tr>
                     <th scope="col" class="sort" data-sort="name">Order ID</th>
                     <th scope="col" class="sort" data-sort="budget">Order Amount</th>
+                    <th scope="col" class="sort" data-sort="budget">Commission</th>
+                    <th scope="col" class="sort" data-sort="budget">Discount</th>
                     <th scope="col" class="sort" data-sort="budget">Product</th>
+                    <th scope="col" class="sort" data-sort="budget">Variant</th>
                     <th scope="col" class="sort" data-sort="budget">Product Quantity</th>
                     <th scope="col" class="sort" data-sort="status">Status</th>
                     <th scope="col">User</th>
@@ -51,7 +54,16 @@
                         <%= order.shopify_order_data['total_price']%>
                       </td>
                       <td class="budget">
+                        <%= order.vendor_commission%>
+                      </td>
+                      <td class="budget">
+                        <%= order.shopify_line_item_discount%>
+                      </td>
+                      <td class="budget">
                         <%= order.vendor_product.shopify_product_data['title']%>
+                      </td>
+                      <td class="budget">
+                        <%= order.vendor_variant.shopify_variant_data['title']%>
                       </td>
                       <td class="budget">
                         <%= order.shopify_product_quantity%>

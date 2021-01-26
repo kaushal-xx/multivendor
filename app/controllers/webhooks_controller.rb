@@ -47,8 +47,10 @@ class WebhooksController < ApplicationController
                 vendor = Vendor.find_by_code line_item[:vendor]
                 if vendor.present?
                     if vendor.vendor_orders.where(shopify_order_id: params[:id], shopify_variant_id: line_item[:variant_id]).blank?
-                        
-                        vendor_variant.vendor_orders.create(vendor_product: vendor_variant.vendor_product, 
+                        puts "**********Save************"
+                        puts line_item.inspect
+                        puts "**********************"
+                        order = vendor_variant.vendor_orders.new(vendor_product: vendor_variant.vendor_product, 
                             shopify_variant_id: line_item[:variant_id],
                             vendor: vendor_variant.vendor, 
                             shopify_order_id: params[:id], 
@@ -60,6 +62,15 @@ class WebhooksController < ApplicationController
                             shopify_line_item_discount: line_item[:total_discount],
                             shopify_line_item_total_price: (line_item[:quantity].to_i*line_item[:price].to_f),
                             vendor_commission: (line_item[:quantity].to_i*line_item[:price].to_f) - line_item[:total_discount].to_f)
+                        if order.save
+                            puts "**********Saveed************"
+                            puts order.id
+                            puts "**********************"
+                        else
+                            puts "**********Faild************"
+                            puts order.inspect
+                            puts "**********************"
+                        end
                     end
                     vendor_variant.reload_shopify_variant_stock
                 end
