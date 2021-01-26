@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vendor: one
+  vendor_product: one
+  shopify_product_id: 
+  shopify_variant_id: 
+  shopify_variant_data: 
+  stock_count: 1
+  shopify_variant_price: 1.5
+
+two:
+  vendor: two
+  vendor_product: two
+  shopify_product_id: 
+  shopify_variant_id: 
+  shopify_variant_data: 
+  stock_count: 1
+  shopify_variant_price: 1.5

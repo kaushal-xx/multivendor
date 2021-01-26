@@ -8,7 +8,13 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("jquery")
+require("jquery.scrollbar")
+require("bootstrap")
+// require('packs/components/vendor/jquery.min.js')
+// require('packs/components/vendor/jquery.scrollbar.min.js')
+// require('packs/components/vendor/jquery-scrollLock.min.js')
 require('packs/social-share-button.js.erb')
+
 import "chart.js"
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_21_064744) do
+ActiveRecord::Schema.define(version: 2021_01_25_154641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,8 +86,77 @@ ActiveRecord::Schema.define(version: 2021_01_21_064744) do
     t.index ["shopify_user_id"], name: "index_users_on_shopify_user_id", unique: true
   end
 
+  create_table "vendor_orders", force: :cascade do |t|
+    t.bigint "vendor_id", null: false
+    t.bigint "shopify_order_id"
+    t.json "shopify_order_data"
+    t.float "shopify_order_amount"
+    t.bigint "shopify_product_id"
+    t.integer "shopify_product_quantity"
+    t.bigint "shopify_variant_id"
+    t.bigint "vendor_product_id", null: false
+    t.string "shopify_order_status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["vendor_id"], name: "index_vendor_orders_on_vendor_id"
+    t.index ["vendor_product_id"], name: "index_vendor_orders_on_vendor_product_id"
+  end
+
+  create_table "vendor_products", force: :cascade do |t|
+    t.bigint "vendor_id", null: false
+    t.bigint "shopify_product_id"
+    t.bigint "shopify_variant_id"
+    t.json "shopify_product_data"
+    t.integer "stock_count"
+    t.float "shopify_product_price"
+    t.float "shopify_variant_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "handle"
+    t.index ["vendor_id"], name: "index_vendor_products_on_vendor_id"
+  end
+
+  create_table "vendor_variants", force: :cascade do |t|
+    t.bigint "vendor_id", null: false
+    t.bigint "vendor_product_id", null: false
+    t.bigint "shopify_product_id"
+    t.bigint "shopify_variant_id"
+    t.json "shopify_variant_data"
+    t.integer "stock_count"
+    t.float "shopify_variant_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["vendor_id"], name: "index_vendor_variants_on_vendor_id"
+    t.index ["vendor_product_id"], name: "index_vendor_variants_on_vendor_product_id"
+  end
+
+  create_table "vendors", force: :cascade do |t|
+    t.string "name"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.float "max_commission"
+    t.float "float"
+    t.string "reference_code"
+    t.boolean "active", default: false
+    t.string "uniq_code"
+    t.string "string"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "code"
+    t.index ["email"], name: "index_vendors_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_vendors_on_reset_password_token", unique: true
+  end
+
   add_foreign_key "discounts", "sme_users"
   add_foreign_key "order_discounts", "discounts"
   add_foreign_key "order_discounts", "orders"
   add_foreign_key "orders", "sme_users"
+  add_foreign_key "vendor_orders", "vendor_products"
+  add_foreign_key "vendor_orders", "vendors"
+  add_foreign_key "vendor_products", "vendors"
+  add_foreign_key "vendor_variants", "vendor_products"
+  add_foreign_key "vendor_variants", "vendors"
 end

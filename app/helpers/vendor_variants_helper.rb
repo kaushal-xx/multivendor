@@ -1,0 +1,2 @@
+module VendorVariantsHelper
+end

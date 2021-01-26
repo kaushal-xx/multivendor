@@ -11,6 +11,33 @@ module Utils
     self.reference_code
   end
 
+  def generate_vendor_code
+    if self.code.present? && self.code.length != 6
+      errors.add(:uniq_code, "length should be of 6 character")
+    else
+      self.code = generate_random_vendor_uniq_code
+    end
+
+    self.code
+  end
+
+  def generate_random_vendor_uniq_code
+    prifix = self.name.downcase.gsub(/\s+/, "")[0..6]
+    count = 0
+    loop do
+      if count > 0
+        token = prifix + '_' + count.to_s
+      else
+        token = prifix 
+      end
+      if self.class.where(code: token).blank?
+        break token 
+      else
+        count =+ 1
+      end
+    end
+  end
+
   def generate_random_uniq_code
     loop do
       token = random_number 6

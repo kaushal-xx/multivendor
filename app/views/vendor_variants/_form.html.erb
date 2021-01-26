@@ -1,0 +1,52 @@
+<%= form_with(model: vendor_variant, local: true) do |form| %>
+  <% if vendor_variant.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(vendor_variant.errors.count, "error") %> prohibited this vendor_variant from being saved:</h2>
+
+      <ul>
+        <% vendor_variant.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :vendor_id %>
+    <%= form.text_field :vendor_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vendor_product_id %>
+    <%= form.text_field :vendor_product_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_product_id %>
+    <%= form.text_field :shopify_product_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_variant_id %>
+    <%= form.text_field :shopify_variant_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_variant_data %>
+    <%= form.text_field :shopify_variant_data %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stock_count %>
+    <%= form.number_field :stock_count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shopify_variant_price %>
+    <%= form.text_field :shopify_variant_price %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

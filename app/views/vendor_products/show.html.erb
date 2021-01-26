@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @vendor_product.vendor_id %>
+</p>
+
+<p>
+  <strong>Shopify product:</strong>
+  <%= @vendor_product.shopify_product_id %>
+</p>
+
+<p>
+  <strong>Shopify variant:</strong>
+  <%= @vendor_product.shopify_variant_id %>
+</p>
+
+<p>
+  <strong>Shopify product data:</strong>
+  <%= @vendor_product.shopify_product_data %>
+</p>
+
+<p>
+  <strong>Stock count:</strong>
+  <%= @vendor_product.stock_count %>
+</p>
+
+<p>
+  <strong>Shopify product price:</strong>
+  <%= @vendor_product.shopify_product_price %>
+</p>
+
+<p>
+  <strong>Shopify variant price:</strong>
+  <%= @vendor_product.shopify_variant_price %>
+</p>
+
+<%= link_to 'Edit', edit_vendor_product_path(@vendor_product) %> |
+<%= link_to 'Back', vendor_products_path %>

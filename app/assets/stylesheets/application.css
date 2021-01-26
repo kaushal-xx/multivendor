@@ -15,5 +15,6 @@
  *= require nucleo
  *= require chart.min
  *= require social-share-button
+ *= require jquery.scrollbar
  *= require_self
  */

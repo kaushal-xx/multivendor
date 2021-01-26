@@ -1,6 +1,18 @@
 module ApplicationHelper
 
 	def product_url(product)
+		if current_sme_user.present?
+			sme_user_product_url(product)
+		else
+			vendor_product_url(product)
+		end
+	end
+
+	def vendor_product_url(product)
+		"https://#{Rails.application.credentials.dig(:shopify_api_shopprakritik_shop).presence}/products/#{product.handle}"
+	end
+
+	def sme_user_product_url(product)
 		@default_discount ||= current_sme_user.default_discount
 		if @default_discount.present?
 			"https://#{Rails.application.credentials.dig(:shopify_api_shopprakritik_shop).presence}/products/#{product.handle}?reference_code=#{current_sme_user.reference_code}&discount_code=#{@default_discount.shopify_discount_code}"

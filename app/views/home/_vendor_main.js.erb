@@ -702,7 +702,7 @@ var BarsChart = (function() {
 				labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
 				datasets: [{
 					label: 'Sales',
-					data: <%= [0,0,0,0,0]+current_sme_user.orders.group_by{|s| s.created_at.month}.values.map{|s| s.count} %>
+					data: <%= [0,0,0,0,0]+current_vendor.vendor_orders.group_by{|s| s.created_at.month}.values.map{|s| s.count} %>
 				}]
 			}
 		});
@@ -776,7 +776,7 @@ var SalesChart = (function() {
         labels: ['Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
         datasets: [{
           label: 'Performance',
-          data: <%= [0,0,0,0,0,0,0]+current_sme_user.orders.group_by{|s| s.created_at.month}.values.map{|s| s.map(&:shopify_order_amount).sum} %>
+          data: <%= [0,0,0,0,0,0,0]+current_vendor.vendor_orders.group_by{|s| s.created_at.month}.values.map{|s| s.map(&:shopify_order_amount).sum} %>
         }]
       }
     });
@@ -912,34 +912,6 @@ var noUiSlider = (function() {
 			}), c.noUiSlider.on("update", function(a, b) {
 					f[b].textContent = a[b]
 			})
-	}
-
-})();
-
-//
-// Scrollbar
-//
-
-'use strict';
-
-var Scrollbar = (function() {
-
-	// Variables
-
-	var $scrollbar = $('.scrollbar-inner');
-
-
-	// Methods
-
-	function init() {
-		$scrollbar.scrollbar().scrollLock()
-	}
-
-
-	// Events
-
-	if ($scrollbar.length) {
-		init();
 	}
 
 })();

@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @vendor_order.vendor_id %>
+</p>
+
+<p>
+  <strong>Shopify order:</strong>
+  <%= @vendor_order.shopify_order_id %>
+</p>
+
+<p>
+  <strong>Shopify order data:</strong>
+  <%= @vendor_order.shopify_order_data %>
+</p>
+
+<p>
+  <strong>Shopify order amount:</strong>
+  <%= @vendor_order.shopify_order_amount %>
+</p>
+
+<p>
+  <strong>Shopify product:</strong>
+  <%= @vendor_order.shopify_product_id %>
+</p>
+
+<p>
+  <strong>Shopify product quantity:</strong>
+  <%= @vendor_order.shopify_product_quantity %>
+</p>
+
+<p>
+  <strong>Shopify variant:</strong>
+  <%= @vendor_order.shopify_variant_id %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @vendor_order.product_id %>
+</p>
+
+<p>
+  <strong>Shopify order status:</strong>
+  <%= @vendor_order.shopify_order_status %>
+</p>
+
+<%= link_to 'Edit', edit_vendor_order_path(@vendor_order) %> |
+<%= link_to 'Back', vendor_orders_path %>

@@ -1,0 +1,87 @@
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Product</h6>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Product New </h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <% if @product.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@product.errors.count, "error") %> prohibited this discount from being saved:</h2>
+
+              <ul>
+                <% @product.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= form_with(model: @product, local: true) do |form| %>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Title</label>
+                    <%= form.text_field :title, class: "form-control"  %>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">body</label>
+                    <%= form.text_field :body, class: "form-control"  %>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Product Type</label>
+                    <%= form.text_field :product_type, class: "form-control"  %>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Image</label>
+                    <%= form.file_field :image, class: "form-control"  %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Publish</label>
+                    <%= form.check_box :publish %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <%= form.submit 'Save', class: 'btn btn-primary my-4' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

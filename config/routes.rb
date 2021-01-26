@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  
+  resources :vendor_orders
+  resources :vendor_products do 
+    resources :vendor_variants
+  end
+  devise_for :vendors
   resources :discounts
   resources :orders
   devise_for :sme_users

@@ -31,6 +31,35 @@ class WebhooksController < ApplicationController
                 order.save
             end
         end
+    else
+        params[:line_items].each do |line_item|
+            puts "**********************"
+            puts line_item[:id]
+            puts line_item[:variant_id]
+            puts line_item[:quantity]
+            puts line_item[:fulfillment_status]
+            puts line_item[:price]
+            puts line_item[:total_discount]
+            puts line_item[:vendor]
+            puts "*********************"
+            vendor_variant = VendorVariant.find_by_shopify_variant_id line_item[:variant_id]
+            if vendor_variant.present?
+                vendor = Vendor.find_by_code line_item[:vendor]
+                if vendor.present?
+                    vendor_variant.order.create(vendor_product: vendor_variant.vendor_product, 
+                        vendor: vendor_variant.vendor, 
+                        shopify_order_id: params[:id], 
+                        shopify_order_data: params, 
+                        shopify_order_amount: params[:total_price], 
+                        shopify_product_quantity: line_item[:quantity],
+                        shopify_order_status: line_item[:fulfillment_status],
+                        shopify_line_item_price: line_item[:price],
+                        shopify_line_item_discount: line_item[:total_discount])
+                    vendor_variant.reload_shopify_variant_stock
+                end
+
+            end
+        end
     end
     render json: {message: "Order created"}, status: :ok
   end

@@ -51,10 +51,10 @@
                         <%= order.shopify_order_data['total_price']%>
                       </td>
                       <td class="budget">
-                        <%= order.shopify_order_discount_amount%>
+                        <%= order.shopify_order_discount_amount.round(2)%>
                       </td>
                       <td class="budget">
-                        <%= order.sme_user_commission%>
+                        <%= order.sme_user_commission.round(2)%>
                       </td>
                       <td>
                         <%= order.shopify_order_data['fulfillment_status']%>
