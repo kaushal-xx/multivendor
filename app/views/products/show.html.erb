@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Shopify product:</strong>
+  <%= @product.shopify_product_id %>
+</p>
+
+<p>
+  <strong>Shopify handle:</strong>
+  <%= @product.shopify_handle %>
+</p>
+
+<p>
+  <strong>Sme commission:</strong>
+  <%= @product.sme_commission %>
+</p>
+
+<p>
+  <strong>Shopify product data:</strong>
+  <%= @product.shopify_product_data %>
+</p>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

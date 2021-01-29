@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Shopify order:</strong>
+  <%= @draft_order.shopify_order_id %>
+</p>
+
+<p>
+  <strong>Shopify order data:</strong>
+  <%= @draft_order.shopify_order_data %>
+</p>
+
+<p>
+  <strong>Sme user:</strong>
+  <%= @draft_order.sme_user_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @draft_order.status %>
+</p>
+
+<%= link_to 'Edit', edit_draft_order_path(@draft_order) %> |
+<%= link_to 'Back', draft_orders_path %>

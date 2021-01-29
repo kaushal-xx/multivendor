@@ -2,4 +2,6 @@
   <%= render "sme_dashboard"%>
 <% elsif current_vendor.present?%>
   <%= render "vendor_dashboard"%>
+<% elsif current_admin.present?%>
+  <%= render "admin_dashboard"%>
 <% end %>

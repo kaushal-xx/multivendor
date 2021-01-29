@@ -1,12 +1,50 @@
 	# frozen_string_literal: true
 
 class HomeController < ApplicationController
-	before_action :authenticate_user
+  before_action :authenticate_user
   def index
-
+  	if current_admin.present?
+  		Shop.set_store_session
+  		@products = ShopifyAPI::Product.all
+  	end
   end
 
   def profile
 
+  end
+
+  def sme
+  	@sme_users = SmeUser.all
+  end
+
+  def edit_sme
+  	@sme_user = SmeUser.find_by_id params[:sme_user_id]
+  end
+
+  def update_sme
+  	puts params.inspect
+  	sme_user = SmeUser.find_by_id params[:sme_user_id]
+  	sme_user.update(active: params[:sme_user][:active])
+  	redirect_to '/sme'
+  end
+
+  def vendor
+  	@vendors = Vendor.all
+  end
+
+  def edit_vendor
+  	@vendor = Vendor.find_by_id params[:vendor_id]
+  end
+
+  def update_vendor
+  	puts params.inspect
+  	vendor = Vendor.find_by_id params[:vendor_id]
+  	vendor.update(active: params[:vendor][:active])
+  	redirect_to '/vendor'
+  end
+
+  def sme_products
+	Shop.set_store_session
+	@products = ShopifyAPI::Product.all
   end
 end

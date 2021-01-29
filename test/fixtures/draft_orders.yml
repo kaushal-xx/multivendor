@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shopify_order_id: 
+  shopify_order_data: 
+  sme_user: one
+  status: MyString
+
+two:
+  shopify_order_id: 
+  shopify_order_data: 
+  sme_user: two
+  status: MyString

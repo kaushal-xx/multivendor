@@ -21,9 +21,18 @@ class WebhooksController < ApplicationController
                 puts "***********3***********"
                 order = sme_user.orders.new(shopify_order_id: params[:id], shopify_order_data: params, shopify_order_amount: params[:total_price], shopify_order_discount_amount: params[:total_discounts])
                 order_total_value = order.shopify_order_amount.to_f + order.shopify_order_discount_amount.to_f
-                sme_commission = (sme_user.max_commission.to_f/100) * order_total_value.to_f
-                if sme_commission > order.shopify_order_discount_amount.to_f
-                    sme_commission = sme_commission - order.shopify_order_discount_amount.to_f
+                sme_commission = 0.0
+                total_discount = 0.0
+                params[:line_items].each do |line_item|
+                    product = Product.find_by_shopify_product_id(line_item[:product_id])
+                    if product.present? && product.sme_commission.present? && product.sme_commission > 0
+                        total_price_line_item = (line_item[:quantity].to_i*line_item[:price].to_f)
+                        sme_commission = sme_commission + (product.sme_commission.to_f/100) * total_price_line_item.to_f
+                        total_discount = total_discount + line_item[:total_discount].to_f
+                    end
+                end
+                if sme_commission > total_discount
+                    sme_commission = sme_commission - total_discount.to_f
                 else
                     sme_commission = 0.0
                 end

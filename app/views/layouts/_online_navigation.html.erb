@@ -2,4 +2,6 @@
   <%= render "/share/sme_user/online_navigation"%>
 <% elsif current_vendor.present?%>
   <%= render "/share/vendor/online_navigation"%>
+<% elsif current_admin.present?%>
+  <%= render "/share/admin/online_navigation"%>
 <% end %>

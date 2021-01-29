@@ -2,4 +2,6 @@
   <%= render "home/sme_user/profile"%>
 <% elsif current_vendor.present?%>
   <%= render "home/vendor/profile"%>
+<% elsif current_admin.present?%>
+  <%= render "home/admin/profile"%>
 <% end %>

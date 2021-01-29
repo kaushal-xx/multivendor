@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <% if current_sme_user.present? || current_vendor.present?%>
+    <% if current_sme_user.present? || current_vendor.present? || current_admin.present?%>
       <%= render 'layouts/online_navigation' %>
     <% else %>
       <%= render 'layouts/offline_navigation' %>

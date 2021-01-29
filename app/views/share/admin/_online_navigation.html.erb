@@ -15,7 +15,7 @@
             <li class="nav-item">
               <a class="nav-link active" href="/">
                 <i class="ni ni-tv-2 text-primary"></i>
-                <span class="nav-link-text">Dashboard</span>
+                <span class="nav-link-text">Products</span>
               </a>
             </li>
             <li class="nav-item">
@@ -25,25 +25,19 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/orders">
+              <a class="nav-link" href="/sme">
                 <i class="ni ni-bullet-list-67 text-default"></i>
-                <span class="nav-link-text">Order</span>
+                <span class="nav-link-text">SME</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/discounts">
+              <a class="nav-link" href="/vendor">
                 <i class="ni ni-bullet-list-67 text-default"></i>
-                <span class="nav-link-text">Discount Code</span>
+                <span class="nav-link-text">Vendor</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/sme/products">
-                <i class="ni ni-bullet-list-67 text-default"></i>
-                <span class="nav-link-text">Products</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <%= link_to(destroy_sme_user_session_path(), method: :delete, class: 'nav-link') do %>
+              <%= link_to(destroy_admin_session_path(), method: :delete, class: 'nav-link') do %>
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">LogOut</span>
               <% end %>

@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   
+  resources :draft_orders
+  devise_for :admins
+  resources :products do 
+    member do
+      get :commission
+    end
+  end
   resources :vendor_orders do
     resources :vendor_fulfillments
   end
@@ -12,6 +19,14 @@ Rails.application.routes.draw do
   devise_for :sme_users
   root :to => 'home#index'
   get 'profile', to: 'home#profile'
+  get 'sme', to: 'home#sme'
+  get 'edit_sme', to: 'home#edit_sme'
+  patch 'update_sme', to: 'home#update_sme'
+
+  get 'vendor', to: 'home#vendor'
+  get 'edit_vendor', to: 'home#edit_vendor'
+  patch 'update_vendor', to: 'home#update_vendor'
+  get 'sme/products', to: 'home#sme_products'
 
   resource :marketing_activities, only: [:create, :update] do
     patch :resume
@@ -22,7 +37,6 @@ Rails.application.routes.draw do
     post :preview
     post :errors
   end
-  get '/products', :to => 'products#index'
   post '/webhooks/order_create', :to => 'webhooks#order_create'
   mount ShopifyApp::Engine, at: '/'
 # frozen_string_literal: true
