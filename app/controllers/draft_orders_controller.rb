@@ -1,5 +1,7 @@
 class DraftOrdersController < ApplicationController
   before_action :set_draft_order, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token, :only => [:create]
+
 
   # GET /draft_orders
   # GET /draft_orders.json
@@ -27,18 +29,18 @@ class DraftOrdersController < ApplicationController
     sme_user = SmeUser.find_by_email params[:email]
     if sme_user.present?
       data = []
-      params[:items].each do |item|
+      params[:items].each do |key, item|
         data << {variant_id: item[:variant_id], quantity: item[:quantity]}
       end
-      @shopify_draft_order = ShopifyAPI::DraftOrder.new(line_items: data)
-      @draft_order = DraftOrder.new(draft_order_params)
+      Shop.set_store_session
+      @shopify_draft_order = ShopifyAPI::DraftOrder.new(line_items: data, note_attributes: [{name: 'reference_code', value: sme_user.reference_code}])
     end
 
     respond_to do |format|
       if sme_user.present? && @shopify_draft_order.present? && @shopify_draft_order.save
         DraftOrder.create(sme_user: sme_user, shopify_order_id: @shopify_draft_order.id, shopify_order_data: @shopify_draft_order.attributes)
         format.html { redirect_to draft_orders_url, notice: 'Draft order was successfully created.' }
-        format.json { render :show, status: :created}
+        format.json { render json: 'Success', status: :created}
       else
         format.json { render json: 'errors', status: :unprocessable_entity }
       end
