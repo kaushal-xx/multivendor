@@ -1,7 +1,7 @@
 class DiscountsController < ApplicationController
   before_action :authenticate_sme_user!
   before_action :set_discount, only: [:show, :edit, :update, :destroy]
-
+  before_action :validate_sme_user, only: [:new, :edit, :update, :destroy, :create]
   # GET /discounts
   # GET /discounts.json
   def index
@@ -70,6 +70,6 @@ class DiscountsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def discount_params
-      params.require(:discount).permit(:shopify_discount_code, :active, :shopify_discount_presents, :default)
+      params.require(:discount).permit(:shopify_discount_code, :active, :shopify_discount_presents, :default, :product_ids)
     end
 end

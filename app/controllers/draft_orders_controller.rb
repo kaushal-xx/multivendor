@@ -2,6 +2,7 @@ class DraftOrdersController < ApplicationController
   before_action :authenticate_sme_user!, except: [:create]
   before_action :set_draft_order, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token, :only => [:create]
+  before_action :validate_sme_user, only: [:new, :edit, :update, :destroy, :create]
 
 
   # GET /draft_orders

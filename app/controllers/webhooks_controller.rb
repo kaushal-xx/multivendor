@@ -13,7 +13,7 @@ class WebhooksController < ApplicationController
     reference_code = ((params[:note_attributes]||[]).select{|key| key['name'] == 'reference_code'}.first||{})['value']
     if reference_code.present?
         puts "***********1***********"
-        sme_user = SmeUser.find_by_reference_code reference_code
+        sme_user = SmeUser.active.find_by_reference_code reference_code
         if sme_user.present?
             puts "***********2***********"
             order = Order.find_by_shopify_order_id params[:id]
@@ -53,7 +53,7 @@ class WebhooksController < ApplicationController
             puts "*********************"
             vendor_variant = VendorVariant.find_by_shopify_variant_id line_item[:variant_id]
             if vendor_variant.present?
-                vendor = Vendor.find_by_code line_item[:vendor]
+                vendor = Vendor.active.find_by_code line_item[:vendor]
                 if vendor.present?
                     if vendor.vendor_orders.where(shopify_order_id: params[:id], shopify_variant_id: line_item[:variant_id]).blank?
                         puts "**********Save************"

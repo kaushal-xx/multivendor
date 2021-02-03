@@ -1,6 +1,7 @@
 class VendorVariantsController < ApplicationController
   before_action :set_vendor_variant, only: [:show, :edit, :update, :destroy]
   before_action :set_vendor_product
+  before_action :validate_vendor, only: [:new, :edit, :update, :destroy, :create]
 
   # GET /vendor_variants
   # GET /vendor_variants.json

@@ -15,6 +15,8 @@ class SmeUser < ApplicationRecord
   has_many :draft_orders
   has_many :discounts
 
+  scope :active, -> { where(active: true) }
+
   def default_discount
   	discounts.where(active: true, default: true).first
   end

@@ -7,7 +7,7 @@
               <h6 class="h2 text-white d-inline-block mb-0">Variants: <%= @product.handle%></h6>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <%= link_to 'New', new_vendor_product_vendor_variant_path(@product), class: 'btn btn-sm btn-neutral' %>
+              <%= link_to('New', new_vendor_product_vendor_variant_path(@product), class: 'btn btn-sm btn-neutral') if current_vendor.active%>
             </div>
           </div>
         </div>

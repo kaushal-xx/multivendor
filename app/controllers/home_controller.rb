@@ -22,7 +22,6 @@ class HomeController < ApplicationController
   end
 
   def update_sme
-  	puts params.inspect
   	sme_user = SmeUser.find_by_id params[:sme_user_id]
   	sme_user.update(active: params[:sme_user][:active])
   	redirect_to '/sme'
@@ -51,7 +50,7 @@ class HomeController < ApplicationController
   def varify_sme_user
     Shop.set_store_session
     customer = ShopifyAPI::Customer.find(params[:customer_id])
-    sme_user = SmeUser.find_by_email customer.email
+    sme_user = SmeUser.active.find_by_email customer.email
     respond_to do |format|
     	if sme_user.present?
     		format.json { render json: 'Success', status: :ok}

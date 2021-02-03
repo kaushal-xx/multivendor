@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_29_172924) do
+ActiveRecord::Schema.define(version: 2021_02_03_160907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_172924) do
     t.bigint "shopify_price_rule_id"
     t.json "shopify_price_rule_data"
     t.boolean "default", default: false
+    t.text "shopify_product_ids", default: [], array: true
     t.index ["sme_user_id"], name: "index_discounts_on_sme_user_id"
   end
 

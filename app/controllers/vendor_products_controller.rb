@@ -1,6 +1,7 @@
 class VendorProductsController < ApplicationController
   before_action :authenticate_vendor!
   before_action :set_vendor_product, only: [:show, :edit, :update, :destroy]
+  before_action :validate_vendor, only: [:new, :edit, :update, :destroy, :create]
 
   # GET /vendor_products
   # GET /vendor_products.json
