@@ -12,6 +12,7 @@ class SmeUser < ApplicationRecord
   before_create :set_default_max_commission
 
   has_many :orders
+  has_many :draft_orders
   has_many :discounts
 
   def default_discount

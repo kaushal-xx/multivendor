@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'edit_vendor', to: 'home#edit_vendor'
   patch 'update_vendor', to: 'home#update_vendor'
   get 'sme/products', to: 'home#sme_products'
+  get 'varify_sme_user', to: 'home#varify_sme_user'
 
   resource :marketing_activities, only: [:create, :update] do
     patch :resume

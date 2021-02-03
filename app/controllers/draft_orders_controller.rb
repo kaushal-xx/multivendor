@@ -1,4 +1,5 @@
 class DraftOrdersController < ApplicationController
+  before_action :authenticate_sme_user!, except: [:create]
   before_action :set_draft_order, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token, :only => [:create]
 
@@ -6,7 +7,7 @@ class DraftOrdersController < ApplicationController
   # GET /draft_orders
   # GET /draft_orders.json
   def index
-    @draft_orders = DraftOrder.all
+    @draft_orders = current_sme_user.draft_orders
   end
 
   # GET /draft_orders/1
@@ -26,7 +27,9 @@ class DraftOrdersController < ApplicationController
   # POST /draft_orders
   # POST /draft_orders.json
   def create
-    sme_user = SmeUser.find_by_email params[:email]
+    Shop.set_store_session
+    customer = ShopifyAPI::Customer.find(params[:customer_id])
+    sme_user = SmeUser.find_by_email customer.email
     if sme_user.present?
       data = []
       params[:items].each do |key, item|

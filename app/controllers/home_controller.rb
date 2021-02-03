@@ -1,7 +1,7 @@
 	# frozen_string_literal: true
 
 class HomeController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, except: [:varify_sme_user]
   def index
   	if current_admin.present?
   		Shop.set_store_session
@@ -46,5 +46,18 @@ class HomeController < ApplicationController
   def sme_products
 	Shop.set_store_session
 	@products = ShopifyAPI::Product.all
+  end
+
+  def varify_sme_user
+    Shop.set_store_session
+    customer = ShopifyAPI::Customer.find(params[:customer_id])
+    sme_user = SmeUser.find_by_email customer.email
+    respond_to do |format|
+    	if sme_user.present?
+    		format.json { render json: 'Success', status: :ok}
+    	else
+    		format.json { render json: 'Faild', status: :ok}
+    	end
+    end
   end
 end
