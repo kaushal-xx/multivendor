@@ -4,7 +4,7 @@
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
-            <hi> Multivendor</hi></br>
+            <hi> <%= Config.first.try(:app_title)|| 'Multivendor'%></hi></br>
         </a>
       </div>
       <div class="navbar-inner">

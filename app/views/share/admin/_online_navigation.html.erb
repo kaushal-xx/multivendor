@@ -4,7 +4,7 @@
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
-            <hi> Multivendor</hi></br>
+            <hi> <%= Config.first.try(:app_title)|| 'Multivendor'%></hi></br>
         </a>
       </div>
       <div class="navbar-inner">
@@ -34,6 +34,12 @@
               <a class="nav-link" href="/vendor">
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">Vendor</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/configs">
+                <i class="ni ni-bullet-list-67 text-default"></i>
+                <span class="nav-link-text">Configuration</span>
               </a>
             </li>
             <li class="nav-item">

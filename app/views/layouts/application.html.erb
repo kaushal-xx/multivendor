@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "About Multivendor" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "About #{Config.first.try(:app_title)|| 'Multivendor'}" %></title>
 
-    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "About Multivendor" %>">
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "About #{Config.first.try(:app_title)|| 'Multivendor'}" %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">

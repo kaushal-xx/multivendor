@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  app_commission: 1.5
+  sme_commission: 1.5
+  app_title: MyString
+
+two:
+  app_commission: 1.5
+  sme_commission: 1.5
+  app_title: MyString

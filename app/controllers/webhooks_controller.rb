@@ -22,14 +22,33 @@ class WebhooksController < ApplicationController
                 order = sme_user.orders.new(shopify_order_id: params[:id], shopify_order_data: params, shopify_order_amount: params[:total_price], shopify_order_discount_amount: params[:total_discounts])
                 order_total_value = order.shopify_order_amount.to_f + order.shopify_order_discount_amount.to_f
                 sme_commission = 0.0
+                total_app_commission = 0.0
+                total_app_commission_tax = 0.0
+                total_sme_commission_tax = 0.0
                 total_discount = 0.0
+                config = Config.first
                 params[:line_items].each do |line_item|
+                    total_tax_per = line_item[:tax_lines].map{|s| s[:rate].to_f}.sum||0.0
                     product = Product.find_by_shopify_product_id(line_item[:product_id])
+                    total_price_line_item = (line_item[:quantity].to_i*line_item[:price].to_f)
+                    app_commission =  ((config.app_commission.to_f/100) * total_price_line_item.to_f)
+                    if total_tax_per > 0
+                        app_commission_tax = (total_tax_per.to_f * app_commission.to_f)
+                    else
+                        app_commission_tax = 0.0
+                    end
                     if product.present? && product.sme_commission.present? && product.sme_commission > 0
-                        total_price_line_item = (line_item[:quantity].to_i*line_item[:price].to_f)
-                        sme_commission = sme_commission + (product.sme_commission.to_f/100) * total_price_line_item.to_f
+                        sme_commission = sme_commission + ((product.sme_commission.to_f/100) * app_commission.to_f)
+                        if total_tax_per > 0
+                            sme_commission_tax = (total_tax_per.to_f * sme_commission.to_f)
+                        else
+                            sme_commission_tax = 0.0
+                        end
+                        total_sme_commission_tax = total_sme_commission_tax + sme_commission_tax
                         total_discount = total_discount + line_item[:total_discount].to_f
                     end
+                    total_app_commission = total_app_commission + app_commission
+                    total_app_commission_tax = total_app_commission_tax + app_commission_tax
                 end
                 if sme_commission > total_discount
                     sme_commission = sme_commission - total_discount.to_f
@@ -37,6 +56,9 @@ class WebhooksController < ApplicationController
                     sme_commission = 0.0
                 end
                 order.sme_user_commission = sme_commission.round(2)
+                order.app_commission = total_app_commission.round(2)
+                order.app_commission_tax = total_app_commission_tax.round(2)
+                order.sme_user_commission_tax = total_sme_commission_tax.round(2)
                 order.save
             end
         end

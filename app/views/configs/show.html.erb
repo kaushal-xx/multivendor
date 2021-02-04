@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>App commission:</strong>
+  <%= @config.app_commission %>
+</p>
+
+<p>
+  <strong>Sme commission:</strong>
+  <%= @config.sme_commission %>
+</p>
+
+<p>
+  <strong>App title:</strong>
+  <%= @config.app_title %>
+</p>
+
+<%= link_to 'Edit', edit_config_path(@config) %> |
+<%= link_to 'Back', configs_path %>

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :configs
   resources :draft_orders
   devise_for :admins
   resources :products do 
