@@ -1,7 +1,8 @@
 	# frozen_string_literal: true
 
 class HomeController < ApplicationController
-  before_action :authenticate_user, except: [:varify_sme_user]
+  before_action :authenticate_user, except: [:varify_sme_user, :invoice, :download_invoice]
+  layout "pdf", only: [:invoice, :download_invoice]
   def index
   	if current_admin.present?
   		Shop.set_store_session
@@ -58,5 +59,17 @@ class HomeController < ApplicationController
     		format.json { render json: 'Faild', status: :ok}
     	end
     end
+  end
+
+  def invoice
+
+  end
+
+  def download_invoice
+	send_file(
+    	Order.last.generate_invoice,
+    	filename: "your_custom_file_name.pdf",
+    	type: "application/pdf"
+  	)
   end
 end

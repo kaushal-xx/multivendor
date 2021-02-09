@@ -42,6 +42,7 @@ gem 'social-share-button'
 gem 'shareable'
 gem 'rack-cors'
 gem 'rest-client'
+gem 'grover'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

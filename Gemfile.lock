@@ -96,6 +96,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    combine_pdf (1.0.21)
+      ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.1.7)
     connection_pool (2.2.3)
     crass (1.0.6)
@@ -128,6 +130,9 @@ GEM
     graphql-client (0.16.0)
       activesupport (>= 3.0)
       graphql (~> 1.8)
+    grover (0.14.1)
+      combine_pdf (~> 1.0)
+      nokogiri (~> 1.0)
     haml (5.2.1)
       temple (>= 0.8.0)
       tilt
@@ -276,6 +281,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    ruby-rc4 (0.1.5)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
     ruby2_keywords (0.0.2)
@@ -374,6 +380,7 @@ DEPENDENCIES
   devise-bootstrap-views (~> 1.0)
   devise-i18n
   dotenv-rails
+  grover
   jbuilder (~> 2.7)
   jwt
   kaminari

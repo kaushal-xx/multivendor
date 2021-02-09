@@ -140,7 +140,6 @@ ActiveRecord::Schema.define(version: 2021_02_04_153356) do
     t.json "shopify_fulfillment_data"
     t.integer "shopify_fulfillment_count"
     t.string "shopify_fulfillment_status"
-    t.float "shopify_variant_price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["vendor_id"], name: "index_vendor_fulfillments_on_vendor_id"
