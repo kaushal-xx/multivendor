@@ -128,7 +128,7 @@
     </div>
   </div>
 
-    <script>
+  <script>
       // This sample uses the Autocomplete widget to help the user select a
       // place, then it retrieves the address components associated with that
       // place, and then it populates the form fields with those details.
@@ -139,13 +139,10 @@
       let placeSearch;
       let autocomplete;
       const componentForm = {
-        street_number: "short_name",
-        route: "long_name",
-        locality: "long_name",
-        administrative_area_level_1: "short_name",
-        country: "long_name",
-        postal_code: "short_name",
-        latitude: "latitude"
+        country: "vendor_address_country",
+        postal_code: "vendor_address_pincode",
+        administrative_area_level_1: "vendor_address_state",
+        locality: 'vendor_address_city'
       };
 
       function initAutocomplete() {
@@ -157,7 +154,7 @@
         );
         // Avoid paying for data that you don't need by restricting the set of
         // place fields that are returned to just the address components.
-        autocomplete.setFields(["address_component"]);
+        // autocomplete.setFields(["address_component"]);
         // When the user selects an address from the drop-down, populate the
         // address fields in the form.
         autocomplete.addListener("place_changed", fillInAddress);
@@ -166,22 +163,41 @@
       function fillInAddress() {
         // Get the place details from the autocomplete object.
         const place = autocomplete.getPlace();
-
-        for (const component in componentForm) {
-          document.getElementById(component).value = "";
-          document.getElementById(component).disabled = false;
-        }
-
+        var address1 = ''
+        var address2 = ''
+        console.log(place)
+        var latitude = place.geometry.location.lat();
+        var longitude = place.geometry.location.lng();
         // Get each component of the address from the place details,
         // and then fill-in the corresponding field on the form.
         for (const component of place.address_components) {
           const addressType = component.types[0];
-
+          console.log(addressType)
+          console.log(component['long_name'])
+		   if(addressType.indexOf('sublocality_level') != -1){
+		   	if(address2==''){
+		   		address2 =  component['long_name']
+		   	}else{
+		   		address2 = address2 + ', ' + component['long_name']
+		   	}
+		   }
+		   if(addressType.indexOf('premise') != -1 || addressType.indexOf('route') != -1 || addressType.indexOf('street_number') != -1){
+		   	if(address1==''){
+				address1 = component['long_name']
+		   	}else{
+		   		address1 = address1 + ', ' + component['long_name']
+		   	}
+		   }
           if (componentForm[addressType]) {
-            const val = component[componentForm[addressType]];
-            document.getElementById(addressType).value = val;
+            const val = component['long_name'];
+            document.getElementById(componentForm[addressType]).value = val;
           }
         }
+        document.getElementById('vendor_address_address1').value = address1;
+        document.getElementById('vendor_address_address2').value = address2;
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
+        initMap2();
       }
 
       // Bias the autocomplete object to the user's geographical location,
