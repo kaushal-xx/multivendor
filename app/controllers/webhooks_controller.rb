@@ -80,10 +80,14 @@ class WebhooksController < ApplicationController
         puts line_item[:properties]
         puts "*********************"
         vendor_code = (line_item[:properties].select{|k| k['name']=='vendor_code'}.first||{})['value']
+        puts "**********Vendor************"
+        puts vendor_code
+        puts "**********************"
         if vendor_code.present?
             vendor = Vendor.active.find_by_code vendor_code
             if vendor.present?
-                if vendor.vendor_orders.where(shopify_order_id: params[:id], shopify_variant_id: line_item[:variant_id]).blank?
+                vendor_variant = vendor.vendor_variants.where(shopify_variant_id: line_item[:variant_id]).first
+                if vendor_variant.present? && vendor.vendor_orders.where(shopify_order_id: params[:id], shopify_variant_id: line_item[:variant_id]).blank?
                     puts "**********Save************"
                     puts line_item.inspect
                     puts "**********************"
