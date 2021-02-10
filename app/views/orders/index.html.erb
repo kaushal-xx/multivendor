@@ -29,6 +29,7 @@
                   <tr>
                     <th scope="col" class="sort" data-sort="name">Order ID</th>
                     <th scope="col" class="sort" data-sort="budget">Order Amount</th>
+                    <th scope="col" class="sort" data-sort="budget">Order Subtotal</th>
                     <th scope="col" class="sort" data-sort="budget">Discount Amount</th>
                     <th scope="col" class="sort" data-sort="budget">App Commission</th>
                     <th scope="col" class="sort" data-sort="budget">App Tax</th>
@@ -52,6 +53,9 @@
                       </th>
                       <td class="budget">
                         <%= order.shopify_order_data['total_price']%>
+                      </td>
+                      <td class="budget">
+                        <%= order.shopify_order_data['subtotal_price']%>
                       </td>
                       <td class="budget">
                         <%= order.shopify_order_discount_amount.round(2)%>
