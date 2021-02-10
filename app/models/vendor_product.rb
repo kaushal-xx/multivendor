@@ -6,10 +6,10 @@ class VendorProduct < ApplicationRecord
   has_many :vendor_orders
 
   #=============== Validations ===================================
-  validates :title, :body, :product_type, presence: true
-  before_create :generate_shopify_product
-  before_update :update_shopify_product
-  after_create :add_default_variant
+  # validates :title, :body, :product_type, presence: true
+  # before_create :generate_shopify_product
+  # before_update :update_shopify_product
+  # after_create :add_default_variant
 
   # def title
   # 	self.shopify_product_data['title']

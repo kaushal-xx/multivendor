@@ -6,11 +6,11 @@ class VendorVariant < ApplicationRecord
   has_many :vendor_orders
 
   #=============== Validations ===================================
-  validates :option1, presence: true
-  before_validation :generate_shopify_variant
+  # validates :option1, presence: true
+  # before_validation :generate_shopify_variant
 
-  after_create :update_shopify_product
-  after_update :update_shopify_variant_stock
+  # after_create :update_shopify_product
+  # after_update :update_shopify_variant_stock
 
   def generate_shopify_variant
     if self.skip_validation.blank?

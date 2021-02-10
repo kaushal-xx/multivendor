@@ -1,39 +1,89 @@
-<p id="notice"><%= notice %></p>
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Variants: <%= @shopify_product.handle%></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0">
+              <h3 class="mb-0">Variants</h3>
+            </div>
+            <!-- Light table -->
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="sort" data-sort="name">Product Title</th>
+                    <th scope="col" class="sort" data-sort="name">Image</th>
+                    <th scope="col" class="sort" data-sort="budget">Option</th>
+                    <th scope="col" class="sort" data-sort="status">Price</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <% @shopify_product.variants.each do |variant|%>
+                    <% current_variant = current_vendor.vendor_variants.find_by_shopify_variant_id(variant.id)%>
+                    <tr>
+                      <th scope="row">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm"><%= @shopify_product.title%></span>
+                          </div>
+                        </div>
+                      </th>
+                      <td class="budget">
+                        <% default_image = @shopify_product.images.select{|s| s.id == variant.image_id}.first.try(&:src)%>
+                        <%=image_tag(default_image, width: '25px', height: '25px') if default_image.present?%>
+                      </td>
+                      <td>
+                        <%= variant.option1%>
+                      </td>
+                      <td>
+                        <%= variant.price%>
+                      </td>
+                      <td>
+                        <%= current_variant.try(&:stock_count)%>
+                      </td>
+                      <td>
+                        <% if current_variant.present?%>
+                          <%= link_to 'Add Stock', edit_vendor_product_vendor_variant_path(@product, current_variant, shopify_variant_id: variant.id ), class: 'btn btn-sm btn-neutral' %>
+                        <% else %>
+                          <%= link_to 'Add Stock', new_vendor_product_vendor_variant_path(@product, shopify_variant_id: variant.id), class: 'btn btn-sm btn-neutral' %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<p>
-  <strong>Vendor:</strong>
-  <%= @vendor_product.vendor_id %>
-</p>
-
-<p>
-  <strong>Shopify product:</strong>
-  <%= @vendor_product.shopify_product_id %>
-</p>
-
-<p>
-  <strong>Shopify variant:</strong>
-  <%= @vendor_product.shopify_variant_id %>
-</p>
-
-<p>
-  <strong>Shopify product data:</strong>
-  <%= @vendor_product.shopify_product_data %>
-</p>
-
-<p>
-  <strong>Stock count:</strong>
-  <%= @vendor_product.stock_count %>
-</p>
-
-<p>
-  <strong>Shopify product price:</strong>
-  <%= @vendor_product.shopify_product_price %>
-</p>
-
-<p>
-  <strong>Shopify variant price:</strong>
-  <%= @vendor_product.shopify_variant_price %>
-</p>
-
-<%= link_to 'Edit', edit_vendor_product_path(@vendor_product) %> |
-<%= link_to 'Back', vendor_products_path %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".copy_link").click(function(){
+      copyToClipboard($(this).parent().find('.product_url'));
+    });
+    function copyToClipboard(element) {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(element).text()).select();
+      document.execCommand("copy");
+      $temp.remove();
+    }
+  })
+</script>

@@ -32,7 +32,6 @@
                     <th scope="col" class="sort" data-sort="status">Price</th>
                     <th scope="col">Variant Size</th>
                     <th scope="col" class="sort" data-sort="completion">Action</th>
-                    <th scope="col" class="sort" data-sort="completion">Share</th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -41,28 +40,24 @@
                       <th scope="row">
                         <div class="media align-items-center">
                           <div class="media-body">
-                            <span class="name mb-0 text-sm"><%= product.shopify_product_data['title']%></span>
+                            <span class="name mb-0 text-sm"><%= product.title%></span>
                           </div>
                         </div>
                       </th>
                       <td class="budget">
-                        <%=image_tag(product.shopify_product_data['image']['src'], width: '25px', height: '25px') if product.shopify_product_data['image'].present?%>
+                        <%=image_tag(product.image.src, width: '25px', height: '25px') if product.image.present?%>
                       </td>
                       <td>
-                        <%= product.vendor_variants.first.try(:shopify_variant_price)%>
+                        <%= product.variants.first.try(:price)%>
                       </td>
                       <td>
-                        <%= product.shopify_product_data['variants'].size%>
+                        <%= product.variants.size%>
                       </td>
                       <td>
                         <a href="<%= product_url(product)%>" class="btn btn-sm btn-neutral" target="_blank">Open URL</a>
                         <span class="product_url" style="display: none;"><%= product_url(product)%></span>
                         <span class="btn btn-sm btn-neutral copy_link">Copy URL</span>
-                        <%= link_to 'Variant', vendor_product_vendor_variants_path(product), class: 'btn btn-sm btn-neutral' %>
-                        <%= link_to 'Edit', edit_vendor_product_path(product), class: 'btn btn-sm btn-neutral' %>
-                      </td>
-                      <td>
-                        <%= social_share_button_tag(product.title, url: product_url(product)) %>
+                        <%= link_to 'Variant', vendor_product_path(product), class: 'btn btn-sm btn-neutral' %>
                       </td>
                     </tr>
                   <% end %>

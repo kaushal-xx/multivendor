@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @delivery_address.lat %>
+</p>
+
+<p>
+  <strong>Lon:</strong>
+  <%= @delivery_address.lon %>
+</p>
+
+<p>
+  <strong>Address1:</strong>
+  <%= @delivery_address.address1 %>
+</p>
+
+<p>
+  <strong>Address2:</strong>
+  <%= @delivery_address.address2 %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @delivery_address.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @delivery_address.state %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @delivery_address.country %>
+</p>
+
+<p>
+  <strong>Pincode:</strong>
+  <%= @delivery_address.pincode %>
+</p>
+
+<p>
+  <strong>Google address:</strong>
+  <%= @delivery_address.google_address %>
+</p>
+
+<%= link_to 'Edit', edit_delivery_address_path(@delivery_address) %> |
+<%= link_to 'Back', delivery_addresses_path %>

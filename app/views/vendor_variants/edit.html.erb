@@ -19,7 +19,7 @@
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Variant New </h3>
+              <h3 class="mb-0">Variant Stock </h3>
             </div>
           </div>
         </div>
@@ -40,26 +40,9 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-username">Option Value</label>
-                    <%= form.text_field :option1, value: @vendor_variant.shopify_variant_data['option1'], class: "form-control"  %>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-username">Price</label>
-                    <%= form.text_field :price, value: @vendor_variant.shopify_variant_price, class: "form-control"  %>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
                     <label class="form-control-label" for="input-email">Stock Count</label>
                     <%= form.text_field :stock_count, class: "form-control"  %>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-email">Image</label>
-                    <%= form.file_field :image, class: "form-control"  %>
+                    <%= form.hidden_field :shopify_variant_id, value: @shopify_variant.id  %>
                   </div>
                 </div>
               </div>

@@ -14,6 +14,7 @@ class SmeUser < ApplicationRecord
   has_many :orders
   has_many :draft_orders
   has_many :discounts
+  has_many :delivery_addresses
 
   scope :active, -> { where(active: true) }
 

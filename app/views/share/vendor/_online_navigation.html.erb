@@ -24,6 +24,21 @@
                 <span class="nav-link-text">Profile</span>
               </a>
             </li>
+            <% if current_vendor.vendor_address.present?%>
+              <li class="nav-item">
+                <a class="nav-link" href="/vendor_addresses/<%= current_vendor.vendor_address.id%>">
+                  <i class="ni ni-single-02 text-yellow"></i>
+                  <span class="nav-link-text">Address</span>
+                </a>
+              </li>
+            <% else%>
+              <li class="nav-item">
+                <a class="nav-link" href="/vendor_addresses/new">
+                  <i class="ni ni-single-02 text-yellow"></i>
+                  <span class="nav-link-text">Address</span>
+                </a>
+              </li>
+            <% end %>
             <li class="nav-item">
               <a class="nav-link" href="/vendor_orders">
                 <i class="ni ni-bullet-list-67 text-default"></i>

@@ -11,6 +11,8 @@ class Vendor < ApplicationRecord
   has_many :vendor_orders
   has_many :vendor_products
   has_many :vendor_variants
+  has_one :vendor_address
 
   scope :active, -> { where(active: true) }
+
 end

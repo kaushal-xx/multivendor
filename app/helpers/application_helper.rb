@@ -1,15 +1,19 @@
 module ApplicationHelper
 
-	def product_url(product)
-		if current_sme_user.present?
+	def product_url(product, vendor_code = nil)
+		url = if current_sme_user.present?
 			sme_user_product_url(product)
 		else
 			vendor_product_url(product)
 		end
+		if vendor_code.present?
+			url = url + '&vendor_code=' + vendor_code
+		end
+		url
 	end
 
 	def vendor_product_url(product)
-		"https://#{Rails.application.credentials.dig(:shopify_api_shopprakritik_shop).presence}/products/#{product.handle}"
+		url = "https://#{Rails.application.credentials.dig(:shopify_api_shopprakritik_shop).presence}/products/#{product.handle}"
 	end
 
 	def sme_user_product_url(product)

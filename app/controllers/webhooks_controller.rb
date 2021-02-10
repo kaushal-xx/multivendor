@@ -30,8 +30,13 @@ class WebhooksController < ApplicationController
                 params[:line_items].each do |line_item|
                     total_tax_per = line_item[:tax_lines].map{|s| s[:rate].to_f}.sum||0.0
                     product = Product.find_by_shopify_product_id(line_item[:product_id])
+                    if product.present? && product.application_commission > 0
+                        application_commission = product.application_commission
+                    else
+                        application_commission = config.app_commission
+                    end
                     total_price_line_item = (line_item[:quantity].to_i*line_item[:price].to_f)
-                    app_commission =  ((config.app_commission.to_f/100) * total_price_line_item.to_f)
+                    app_commission =  ((application_commission.to_f/100) * total_price_line_item.to_f)
                     if total_tax_per > 0
                         app_commission_tax = (total_tax_per.to_f * app_commission.to_f)
                     else

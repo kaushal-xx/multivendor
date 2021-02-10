@@ -1,17 +1,24 @@
 class VendorProductsController < ApplicationController
   before_action :authenticate_vendor!
-  before_action :set_vendor_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_vendor_product, only: [:edit, :update, :destroy]
   before_action :validate_vendor, only: [:new, :edit, :update, :destroy, :create]
 
   # GET /vendor_products
   # GET /vendor_products.json
   def index
-    @products = current_vendor.vendor_products.where.not(shopify_product_id: nil)
+    Shop.set_store_session
+    @products = ShopifyAPI::Product.all
   end
 
   # GET /vendor_products/1
   # GET /vendor_products/1.json
   def show
+    Shop.set_store_session
+    @shopify_product = ShopifyAPI::Product.find(params[:id])
+    @product = current_vendor.vendor_products.find_by_shopify_product_id params[:id]
+    if @product.blank?
+      @product = current_vendor.vendor_products.create(shopify_product_id: @shopify_product.id, shopify_product_data: @shopify_product.attributes, handle: @shopify_product.handle)
+    end
   end
 
   # GET /vendor_products/new

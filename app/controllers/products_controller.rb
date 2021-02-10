@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:edit, :update, :destroy]
 
   # GET /products
   # GET /products.json
@@ -77,6 +77,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:shopify_product_id, :sme_commission)
+      params.require(:product).permit(:shopify_product_id, :sme_commission, :application_commission)
     end
 end

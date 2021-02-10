@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   
+  resources :delivery_addresses do 
+    member do
+      get :near_by
+      get :near_by_products
+    end
+  end
+  resources :vendor_addresses
   resources :configs
   resources :draft_orders
   devise_for :admins

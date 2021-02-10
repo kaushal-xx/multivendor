@@ -31,12 +31,14 @@
                     <th scope="col" class="sort" data-sort="budget">Image</th>
                     <th scope="col" class="sort" data-sort="status">Price</th>
                     <th scope="col">Variant Size</th>
-                    <th scope="col">SME Commission</th>
+                    <th scope="col">SME Commission %</th>
+                    <th scope="col">App Commission %</th>
                     <th scope="col" class="sort" data-sort="completion">Action</th>
                   </tr>
                 </thead>
                 <tbody class="list">
                   <% @products.each do |product|%>
+                    <% pro = Product.find_by_shopify_product_id(product.id)%>
                     <tr>
                       <th scope="row">
                         <div class="media align-items-center">
@@ -55,7 +57,10 @@
                         <%= product.variants.size%>
                       </td>
                       <td>
-                        <%= Product.find_by_shopify_product_id(product.id).try(:sme_commission)||0.0%>
+                        <%= pro.try(:sme_commission)||0.0%>
+                      </td>
+                      <td>
+                        <%= pro.try(:application_commission)||0.0%>
                       </td>
                       <td>
                         <%= link_to 'Edit Commision', commission_product_path(product), class: 'btn btn-sm btn-neutral' %>

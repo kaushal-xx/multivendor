@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_04_153356) do
+ActiveRecord::Schema.define(version: 2021_02_10_030409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(version: 2021_02_04_153356) do
     t.string "app_title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "delivery_addresses", force: :cascade do |t|
+    t.bigint "sme_user_id", null: false
+    t.string "lat"
+    t.string "lon"
+    t.text "address1"
+    t.text "address2"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.string "pincode"
+    t.text "google_address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sme_user_id"], name: "index_delivery_addresses_on_sme_user_id"
   end
 
   create_table "discounts", force: :cascade do |t|
@@ -60,6 +76,53 @@ ActiveRecord::Schema.define(version: 2021_02_04_153356) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["sme_user_id"], name: "index_draft_orders_on_sme_user_id"
+  end
+
+  create_table "invoicing_ledger_items", force: :cascade do |t|
+    t.bigint "sender_id"
+    t.bigint "recipient_id"
+    t.string "type"
+    t.datetime "issue_date"
+    t.string "currency", limit: 3, null: false
+    t.decimal "total_amount", precision: 20, scale: 4
+    t.decimal "tax_amount", precision: 20, scale: 4
+    t.string "status", limit: 20
+    t.string "identifier", limit: 50
+    t.string "description"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.string "uuid", limit: 40
+    t.datetime "due_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["recipient_id"], name: "index_invoicing_ledger_items_on_recipient_id"
+    t.index ["sender_id"], name: "index_invoicing_ledger_items_on_sender_id"
+  end
+
+  create_table "invoicing_line_items", force: :cascade do |t|
+    t.bigint "ledger_item_id"
+    t.string "type"
+    t.decimal "net_amount", precision: 20, scale: 4
+    t.decimal "tax_amount", precision: 20, scale: 4
+    t.string "description"
+    t.string "uuid", limit: 40
+    t.datetime "tax_point"
+    t.decimal "quantity", precision: 20, scale: 4
+    t.integer "creator_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ledger_item_id"], name: "index_invoicing_line_items_on_ledger_item_id"
+  end
+
+  create_table "invoicing_tax_rates", force: :cascade do |t|
+    t.string "description"
+    t.decimal "rate", precision: 20, scale: 4
+    t.datetime "valid_from", null: false
+    t.datetime "valid_until"
+    t.integer "replaced_by_id"
+    t.boolean "is_default"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "order_discounts", force: :cascade do |t|
@@ -93,6 +156,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_153356) do
     t.json "shopify_product_data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "application_commission", default: 0.0
   end
 
   create_table "shops", force: :cascade do |t|
@@ -130,6 +194,22 @@ ActiveRecord::Schema.define(version: 2021_02_04_153356) do
     t.index ["shopify_user_id"], name: "index_users_on_shopify_user_id", unique: true
   end
 
+  create_table "vendor_addresses", force: :cascade do |t|
+    t.bigint "vendor_id", null: false
+    t.string "lat"
+    t.string "lon"
+    t.text "address1"
+    t.text "address2"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.string "pincode"
+    t.text "google_address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["vendor_id"], name: "index_vendor_addresses_on_vendor_id"
+  end
+
   create_table "vendor_fulfillments", force: :cascade do |t|
     t.bigint "vendor_id", null: false
     t.bigint "vendor_order_id", null: false
@@ -140,6 +220,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_153356) do
     t.json "shopify_fulfillment_data"
     t.integer "shopify_fulfillment_count"
     t.string "shopify_fulfillment_status"
+    t.float "shopify_variant_price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["vendor_id"], name: "index_vendor_fulfillments_on_vendor_id"
@@ -216,11 +297,13 @@ ActiveRecord::Schema.define(version: 2021_02_04_153356) do
     t.index ["reset_password_token"], name: "index_vendors_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "delivery_addresses", "sme_users"
   add_foreign_key "discounts", "sme_users"
   add_foreign_key "draft_orders", "sme_users"
   add_foreign_key "order_discounts", "discounts"
   add_foreign_key "order_discounts", "orders"
   add_foreign_key "orders", "sme_users"
+  add_foreign_key "vendor_addresses", "vendors"
   add_foreign_key "vendor_fulfillments", "vendor_orders"
   add_foreign_key "vendor_fulfillments", "vendors"
   add_foreign_key "vendor_orders", "vendor_products"

@@ -1,0 +1,93 @@
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Near Vendors</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0">
+              <h3 class="mb-0">Vendor</h3>
+            </div>
+            <!-- Light table -->
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="sort" data-sort="name">Name</th>
+                    <th scope="col" class="sort" data-sort="name">Product Count</th>
+                    <th scope="col" class="sort" data-sort="name">Country</th>
+                    <th scope="col" class="sort" data-sort="budget">State</th>
+                    <th scope="col" class="sort" data-sort="status">City</th>
+                    <th scope="col">Pincode</th>
+                    <th scope="col">Address1</th>
+                    <th scope="col">Address2</th>
+                    <th scope="col">Total Distance(KM)</th>
+                    <th scope="col" class="sort" data-sort="completion">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <% @vendors.each do |vendor|%>
+                    <% address = vendor.vendor_address%>
+                    <tr>
+                      <th scope="row">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm"><%= vendor.name%></span>
+                          </div>
+                        </div>
+                      </th>
+                      <th scope="row">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm"><%= vendor.vendor_products.count%></span>
+                          </div>
+                        </div>
+                      </th>
+                      <th scope="row">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm"><%= address.country%></span>
+                          </div>
+                        </div>
+                      </th>
+                      <td class="budget">
+                        <%= address.state%>
+                      </td>
+                      <td>
+                        <%= address.city%>
+                      </td>
+                      <td>
+                        <%= address.pincode%>
+                      </td>
+                      <td>
+                        <%= address.address1%>
+                      </td>
+                      <td>
+                        <%= address.address2%>
+                      </td>
+                      <td>
+                        <%= address.distance(@delivery_address)%>
+                      </td>
+                      <td>
+                        <%= link_to 'Products', near_by_products_delivery_address_path(@delivery_address, vendor_id: vendor.id), class: 'btn btn-sm btn-neutral' %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
