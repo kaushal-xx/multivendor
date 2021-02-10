@@ -19,7 +19,7 @@ class WebhooksController < ApplicationController
             order = Order.find_by_shopify_order_id params[:id]
             if order.blank?
                 puts "***********3***********"
-                order = sme_user.orders.new(shopify_order_id: params[:id], shopify_order_data: params, shopify_order_amount: params[:total_price], shopify_order_discount_amount: params[:total_discounts])
+                order = sme_user.orders.new(shopify_order_id: params[:id], shopify_order_data: params, shopify_order_amount: params[:subtotal_price], shopify_order_discount_amount: params[:total_discounts])
                 order_total_value = order.shopify_order_amount.to_f + order.shopify_order_discount_amount.to_f
                 sme_commission = 0.0
                 total_app_commission = 0.0
