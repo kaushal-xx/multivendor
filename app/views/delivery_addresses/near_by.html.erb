@@ -1,3 +1,8 @@
+<script type="text/javascript">
+  <%= render '/share/map.js' %>
+</script>
+
+<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{Rails.application.credentials.dig(:google_map_api_key).presence}&libraries=places" %> 
     <!-- Header -->
     <div class="header bg-primary pb-6">
       <div class="container-fluid">
@@ -90,4 +95,16 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div id="map" style="height: 300px; width: 600px;"></div>
+      </div>
     </div>
+<script>
+    var marker_data = []
+    <% @vendors.each_with_index do |vendor,i|%>
+      marker_data[<%= i%>]=['<%= vendor.name%>', <%= vendor.vendor_address.lat%>, <%= vendor.vendor_address.lon%>]
+    <% end %>
+  $(document).ready(function() {
+    initMap3(marker_data);
+  });
+</script>

@@ -67,51 +67,50 @@ class WebhooksController < ApplicationController
                 order.save
             end
         end
-    else
-        params[:line_items].each do |line_item|
-            puts "**********************"
-            puts line_item[:id]
-            puts line_item[:variant_id]
-            puts line_item[:quantity]
-            puts line_item[:fulfillment_status]
-            puts line_item[:price]
-            puts line_item[:total_discount]
-            puts line_item[:vendor]
-            puts "*********************"
-            vendor_variant = VendorVariant.find_by_shopify_variant_id line_item[:variant_id]
-            if vendor_variant.present?
-                vendor = Vendor.active.find_by_code line_item[:vendor]
-                if vendor.present?
-                    if vendor.vendor_orders.where(shopify_order_id: params[:id], shopify_variant_id: line_item[:variant_id]).blank?
-                        puts "**********Save************"
-                        puts line_item.inspect
+    end
+    params[:line_items].each do |line_item|
+        puts "**********************"
+        puts line_item[:id]
+        puts line_item[:variant_id]
+        puts line_item[:quantity]
+        puts line_item[:fulfillment_status]
+        puts line_item[:price]
+        puts line_item[:total_discount]
+        puts line_item[:vendor]
+        puts line_item[:properties]
+        puts "*********************"
+        vendor_code = (line_item[:properties].select{|k| k['name']=='vendor_code'}.first||{})['value']
+        if vendor_code.present?
+            vendor = Vendor.active.find_by_code vendor_code
+            if vendor.present?
+                if vendor.vendor_orders.where(shopify_order_id: params[:id], shopify_variant_id: line_item[:variant_id]).blank?
+                    puts "**********Save************"
+                    puts line_item.inspect
+                    puts "**********************"
+                    order = vendor_variant.vendor_orders.new(vendor_product: vendor_variant.vendor_product, 
+                        shopify_variant_id: line_item[:variant_id],
+                        vendor: vendor_variant.vendor, 
+                        shopify_order_id: params[:id], 
+                        shopify_line_item_id: line_item[:id],
+                        shopify_order_data: params, 
+                        shopify_order_amount: params[:total_price], 
+                        shopify_product_quantity: line_item[:quantity],
+                        shopify_order_status: line_item[:fulfillment_status],
+                        shopify_line_item_price: line_item[:price],
+                        shopify_line_item_discount: line_item[:total_discount],
+                        shopify_line_item_total_price: (line_item[:quantity].to_i*line_item[:price].to_f),
+                        vendor_commission: (line_item[:quantity].to_i*line_item[:price].to_f) - line_item[:total_discount].to_f)
+                    if order.save
+                        puts "**********Saveed************"
+                        puts order.id
                         puts "**********************"
-                        order = vendor_variant.vendor_orders.new(vendor_product: vendor_variant.vendor_product, 
-                            shopify_variant_id: line_item[:variant_id],
-                            vendor: vendor_variant.vendor, 
-                            shopify_order_id: params[:id], 
-                            shopify_line_item_id: line_item[:id],
-                            shopify_order_data: params, 
-                            shopify_order_amount: params[:total_price], 
-                            shopify_product_quantity: line_item[:quantity],
-                            shopify_order_status: line_item[:fulfillment_status],
-                            shopify_line_item_price: line_item[:price],
-                            shopify_line_item_discount: line_item[:total_discount],
-                            shopify_line_item_total_price: (line_item[:quantity].to_i*line_item[:price].to_f),
-                            vendor_commission: (line_item[:quantity].to_i*line_item[:price].to_f) - line_item[:total_discount].to_f)
-                        if order.save
-                            puts "**********Saveed************"
-                            puts order.id
-                            puts "**********************"
-                        else
-                            puts "**********Faild************"
-                            puts order.inspect
-                            puts "**********************"
-                        end
+                    else
+                        puts "**********Faild************"
+                        puts order.inspect
+                        puts "**********************"
                     end
-                    vendor_variant.reload_shopify_variant_stock
                 end
-
+                vendor_variant.update(stock_count: (vendor_variant.stock_count-line_item[:quantity].to_i))
             end
         end
     end

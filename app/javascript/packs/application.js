@@ -14,7 +14,6 @@ require("bootstrap")
 // require('packs/components/vendor/jquery.scrollbar.min.js')
 // require('packs/components/vendor/jquery-scrollLock.min.js')
 require('packs/social-share-button.js.erb')
-require('packs/map.js')
 require('packs/map2.js')
 
 import "chart.js"

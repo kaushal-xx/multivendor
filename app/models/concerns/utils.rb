@@ -24,18 +24,20 @@ module Utils
   def generate_random_vendor_uniq_code
     prifix = self.name.downcase.gsub(/\s+/, "")[0..6]
     count = 0
-    loop do
+    token = nil
+    while prifix.present?
       if count > 0
         token = prifix + '_' + count.to_s
       else
         token = prifix 
       end
       if self.class.where(code: token).blank?
-        break token 
+        prifix = nil
       else
-        count =+ 1
+        count = count + 1
       end
     end
+    token
   end
 
   def generate_random_uniq_code
