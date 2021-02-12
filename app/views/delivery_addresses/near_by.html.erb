@@ -1,8 +1,6 @@
 <script type="text/javascript">
   <%= render '/share/map.js' %>
 </script>
-
-<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{Rails.application.credentials.dig(:google_map_api_key).presence}&libraries=places" %> 
     <!-- Header -->
     <div class="header bg-primary pb-6">
       <div class="container-fluid">

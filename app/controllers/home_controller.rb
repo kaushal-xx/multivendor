@@ -45,7 +45,13 @@ class HomeController < ApplicationController
 
   def sme_products
 	Shop.set_store_session
-	@products = ShopifyAPI::Product.all
+	if params[:token].blank?
+		puts "*********kkkk"
+		@products = ShopifyAPI::Product.find(:all, params:{limit: 10})
+	else
+		puts "***********token"
+		@products = ShopifyAPI::Product.find(:all, params:{page_info: params[:token], limit: 10})
+	end
   end
 
   def varify_sme_user

@@ -1,7 +1,7 @@
 <script type="text/javascript">
   <%= render '/share/map.js' %>
 </script>
-<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{Rails.application.credentials.dig(:google_map_api_key).presence}&libraries=places" %>    <!-- Header -->
+    <!-- Header -->
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
     <div class="header-body">
@@ -216,8 +216,8 @@
           });
         }
       }
-		$(document).ready(function() {
+		$(document).on('turbolinks:load', function() {
 			initMap2();
-		    initAutocomplete();
-		});
+			initAutocomplete();
+		})
     </script>
