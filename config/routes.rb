@@ -6,6 +6,16 @@ Rails.application.routes.draw do
       get :near_by_products
     end
   end
+  namespace :api do 
+    namespace :v1 do
+      resources :sme_users do 
+        collection do 
+          post :login
+          post :logout
+        end
+      end
+    end
+  end
   resources :vendor_addresses
   resources :configs
   resources :draft_orders

@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
 	before_action :configure_permitted_parameters, if: :devise_controller?
-
 	def authenticate_user
 		if current_sme_user.blank? && current_vendor.blank? && current_admin.blank?
 			redirect_to '/sme_users/sign_in'
@@ -18,6 +17,13 @@ class ApplicationController < ActionController::Base
         redirect_to root_url, notice: 'Vendor account is not active'
       end
     end
+
+    def authenticate
+      authenticate_or_request_with_http_token do |token, _options|
+        SmeUser.find_by(authentication_token: token)
+      end
+    end
+
   protected
 
     def configure_permitted_parameters
