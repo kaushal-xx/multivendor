@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :sme_users do 
         collection do 
           post :login
-          post :logout
+          get :logout
         end
       end
     end

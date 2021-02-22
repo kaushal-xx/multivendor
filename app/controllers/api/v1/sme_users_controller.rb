@@ -1,5 +1,5 @@
 class Api::V1::SmeUsersController < ApplicationController
-	protect_from_forgery with: :null_session
+	protect_from_forgery with: :null_session, except: [:login, :logout]
 	def create
 		if params[:customer_id].present?
 			Shop.set_store_session
@@ -47,23 +47,15 @@ class Api::V1::SmeUsersController < ApplicationController
 
 	def show
 		if params[:id].present?
-			Shop.set_store_session
-			shopify_customer = ShopifyAPI::Customer.find(params[:id])
-			if shopify_customer.blank?
-				respond_to do |format|
-		      		format.json { render json: {error: 'customer_id not found'}, status: :unprocessable_entity }
-		    	end
+			sme_user = SmeUser.find_by_shopify_customer_id params[:id]
+			if sme_user.blank?
+			    respond_to do |format|
+			      format.json { render json: {error: 'sme user not found'}, status: :unprocessable_entity }
+			    end	
 			else
-				sme_user = SmeUser.find_by_shopify_customer_id shopify_customer.id
-				if sme_user.blank?
-				    respond_to do |format|
-				      format.json { render json: {error: 'sme user not found'}, status: :unprocessable_entity }
-				    end	
-				else
-				    respond_to do |format|
-				      format.json { render json: {sme_user: sme_user.attributes}, status: :ok }
-				    end	
-				end
+			    respond_to do |format|
+			      format.json { render json: {sme_user: sme_user.attributes}, status: :ok }
+			    end	
 			end
 		else
 		    respond_to do |format|
@@ -76,49 +68,23 @@ class Api::V1::SmeUsersController < ApplicationController
 		if params[:token].present?
 			sme_user = SmeUser.find_by(authentication_token: params[:token])
 			if sme_user.blank?
-			    respond_to do |format|
-			      format.json { render json: {error: 'token invalid found'}, status: :unprocessable_entity }
-			    end
+			    redirect_to request.referer, error: 'SmeUser not found'
 			else
-				if current_sme_user.present? && current_sme_user == sme_user
-				    respond_to do |format|
-				      format.json { render json: {message: 'Success', url: "https://multivendor-prod.herokuapp.com/"}, status: :ok }
-				    end
-				else
-					if current_sme_user.present?
-						signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(:sme_user))
-					end
-					sign_in(:sme_user, sme_user)
-				    respond_to do |format|
-				      format.json { render json: {message: 'Success', url: "https://multivendor-prod.herokuapp.com/"}, status: :ok }
-				    end
+				if current_sme_user.present? && current_sme_user != sme_user
+					puts "******************logout*********"
+					signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(:sme_user))
 				end
+				sign_in(:sme_user, sme_user)
+				redirect_to root_path
 			end
 		else
-		    respond_to do |format|
-		      format.json { render json: {error: 'token not found'}, status: :unprocessable_entity }
-		    end
+		    redirect_to request.referer, error: 'SmeUser not found'
 		end
 	end
 
 	def logout
-		if params[:token].present?
-			sme_user = SmeUser.find_by(authentication_token: params[:token])
-			if sme_user.blank?
-			    respond_to do |format|
-			      format.json { render json: {error: 'token invalid found'}, status: :unprocessable_entity }
-			    end
-			else
-				(Devise.sign_out_all_scopes ? sign_out : sign_out(:sme_user))
-			    respond_to do |format|
-			      format.json { render json: {message: 'Success'}, status: :ok }
-			    end
-			end
-		else
-		    respond_to do |format|
-		      format.json { render json: {error: 'token not found'}, status: :unprocessable_entity }
-		    end
-		end
+		(Devise.sign_out_all_scopes ? sign_out : sign_out(:sme_user))
+		redirect_to request.referer
 	end
 
 end
