@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_21_095557) do
+ActiveRecord::Schema.define(version: 2021_02_22_163239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,8 @@ ActiveRecord::Schema.define(version: 2021_02_21_095557) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.float "application_commission", default: 0.0
+    t.float "application_commission_tax"
+    t.float "sme_commission_tax"
   end
 
   create_table "shops", force: :cascade do |t|

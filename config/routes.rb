@@ -33,7 +33,12 @@ Rails.application.routes.draw do
   end
   devise_for :vendors
   resources :discounts
-  resources :orders
+  resources :orders do
+    member do 
+      get :download_invoice
+      get :invoice
+    end
+  end
   devise_for :sme_users
   root :to => 'home#index'
   get 'profile', to: 'home#profile'

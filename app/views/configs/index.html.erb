@@ -26,6 +26,8 @@
                   <tr>
                     <th scope="col" class="sort" data-sort="name">App Title</th>
                     <th scope="col" class="sort" data-sort="budget">App Commission</th>
+                    <th scope="col" class="sort" data-sort="budget">App Tax</th>
+                    <th scope="col" class="sort" data-sort="budget">SME Tax</th>
                     <th scope="col" class="sort" data-sort="completion">Action</th>
                   </tr>
                 </thead>
@@ -40,6 +42,12 @@
                     </th>
                     <td class="budget">
                       <%= @config.app_commission%>% of product cost
+                    </td>
+                    <td class="budget">
+                      <%= @config.app_commission_tax%>% of product cost
+                    </td>
+                    <td class="budget">
+                      <%= @config.sme_commission_tax%>%
                     </td>
                     <td>
                       <%= link_to 'Edit', edit_config_path(@config), class: 'btn btn-sm btn-neutral' %>

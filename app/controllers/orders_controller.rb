@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_sme_user!
+  before_action :authenticate_sme_user!, except: [:download_invoice, :invoice]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-
+  layout "pdf", only: [:invoice, :download_invoice]
   # GET /orders
   # GET /orders.json
   def index
@@ -60,6 +60,21 @@ class OrdersController < ApplicationController
       format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def invoice
+    Shop.set_store_session
+    @order = Order.find_by_id params[:id]
+    @shopify_order = ShopifyAPI::Order.find @order.shopify_order_id
+  end
+
+  def download_invoice
+    order = Order.find_by_id params[:id]
+    send_file(
+      order.generate_invoice,
+      filename: "your_custom_file_name.pdf",
+      type: "application/pdf"
+    )
   end
 
   private

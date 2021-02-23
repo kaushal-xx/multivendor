@@ -77,6 +77,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:shopify_product_id, :sme_commission, :application_commission)
+      params.require(:product).permit(:shopify_product_id, :sme_commission, :application_commission, :sme_commission_tax, :application_commission_tax)
     end
 end

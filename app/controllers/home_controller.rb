@@ -72,8 +72,9 @@ class HomeController < ApplicationController
   end
 
   def download_invoice
+  	order = current_sme_user.orders.find_by_id params[:order_id]
 	send_file(
-    	Order.last.generate_invoice,
+    	order.generate_invoice,
     	filename: "your_custom_file_name.pdf",
     	type: "application/pdf"
   	)

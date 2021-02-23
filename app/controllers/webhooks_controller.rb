@@ -36,6 +36,12 @@ class WebhooksController < ApplicationController
                     else
                         application_commission = config.app_commission
                     end
+                    if product.present? && product.application_commission_tax.present?
+                        total_tax_per = product.application_commission_tax
+                    end
+                    if product.present? && product.sme_commission_tax.present?
+                        total_sme_tax_per = product.sme_commission_tax
+                    end
                     total_price_line_item = (line_item[:quantity].to_i*line_item[:price].to_f)
                     app_commission =  ((application_commission.to_f/100) * total_price_line_item.to_f)
                     if total_tax_per > 0

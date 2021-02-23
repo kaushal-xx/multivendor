@@ -54,6 +54,20 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
+                    <label class="form-control-label" for="input-username">App Tax</label>
+                    <%= form.text_field :app_commission_tax, class: "form-control"  %>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">SME Tax</label>
+                    <%= form.text_field :sme_commission_tax, class: "form-control"  %>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
                     <%= form.submit 'Save', class: 'btn btn-primary my-4' %>
                   </div>
                 </div>

@@ -82,6 +82,9 @@
                       <td>
                         <%= order.shopify_order_data['created_at']%>
                       </td>
+                      <td>
+                        <%= link_to 'Invoice', download_invoice_order_path(order), class: 'btn btn-sm btn-neutral'%>
+                      </td>
                     </tr>
                   <% end %>
                 </tbody>

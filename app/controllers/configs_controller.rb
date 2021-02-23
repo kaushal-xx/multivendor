@@ -70,6 +70,6 @@ class ConfigsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def config_params
-      params.require(:config).permit(:app_commission, :sme_commission, :app_title)
+      params.require(:config).permit(:app_commission, :sme_commission, :app_title, :app_commission_tax, :sme_commission_tax)
     end
 end

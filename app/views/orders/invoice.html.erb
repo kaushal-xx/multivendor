@@ -8,11 +8,11 @@
         <div>No 105, Uttri Main Road, Ramesh Nagar, Bangalore, KA, India</div>
         <div>1800-120-8030</div>
         <div>29AAKCS8456MIZD</div>
-        <div><a href="mailto:company@example.com">onlinesupport@srisritattva.com</a></div>
+        <div>onlinesupport@srisritattva.com</div>
       </div>
       <div id="project">
         <div><span>SME</span> <%= @order.sme_user.name%></div>
-        <div><span>EMAIL</span> <a href="mailto:john@example.com"><%= @order.sme_user.name%></a></div>
+        <div><span>EMAIL</span> <%= @order.sme_user.email%></div>
         <div><span>DATE</span> <%= @order.created_at.strftime('%B %d, %Y')%></div>
         <div><span>DUE DATE</span> <%= @order.created_at.strftime('%B %d, %Y')%></div>
       </div>
@@ -22,13 +22,13 @@
         <thead>
           <tr>
             <th class="service">TITLE</th>
-            <th>PRICE</th>
+            <th class="service">PRICE</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="service">Products</td>
-            <td class="service"><%= @shopify_order.line_items.map{|li| li.title}%></td>
+            <td class="service"><%= @shopify_order.line_items.map{|li| li.title}.join('<br>').html_safe%></td>
           </tr>
           <tr>
             <td class="service">Order ID</td>
@@ -36,31 +36,31 @@
           </tr>
           <tr>
             <td class="service">Order Amount</td>
-            <td class="unit"><%= @order.shopify_order_data['total_price']%></td>
+            <td class="service"><%= @order.shopify_order_data['total_price']%></td>
           </tr>
           <tr>
             <td class="service">Order Subtotal</td>
-            <td class="qty"><%= @order.shopify_order_data['subtotal_price']%></td>
+            <td class="service"><%= @order.shopify_order_data['subtotal_price']%></td>
           </tr>
           <tr>
             <td class="service">Discount Amount</td>
-            <td class="total"><%= @order.shopify_order_discount_amount.round(2)%></td>
+            <td class="service"><%= @order.shopify_order_discount_amount.round(2)%></td>
           </tr>
           <tr>
             <td class="service">App Commission</td>
-            <td class="total"><%= @order.app_commission.round(2)%></td>
+            <td class="service"><%= @order.app_commission.round(2)%></td>
           </tr>
           <tr>
             <td class="service">App Tax</td>
-            <td class="total"><%= @order.app_commission_tax.round(2)%></td>
+            <td class="service"><%= @order.app_commission_tax.round(2)%></td>
           </tr>
           <tr>
             <td class="service">SME Commission</td>
-            <td class="total"><%= @order.sme_user_commission.round(2)%></td>
+            <td class="service"><%= @order.sme_user_commission.round(2)%></td>
           </tr>
           <tr>
             <td class="service">SME Tax</td>
-            <td class="total"><%= @order.sme_user_commission_tax.round(2)%></td>
+            <td class="service"><%= @order.sme_user_commission_tax.round(2)%></td>
           </tr>
         </tbody>
       </table>
